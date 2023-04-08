@@ -30,6 +30,9 @@ then
 	# update
 	sudo apt update; sudo apt upgrade -y; sudo snap refresh; sudo apt autoremove -y; sudo apt autoclean
 
+	# .bash_aliases
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -o ~/.bash_aliases
+
 	# essential
 	sudo apt install -y \
 		gnome-shell-extensions \
@@ -52,6 +55,9 @@ then
 
 	# update
 	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
+
+	# .bash_aliases
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -o ~/.bash_aliases
 
 	# purge xed
 	sudo apt purge -y xed
@@ -119,9 +125,6 @@ then
 
 	# uninstall .deb to replace with the flatpak version
 	sudo apt purge -y libreoffice*
-
-	# .bash_aliases
-	curl -L https://gist.github.com/diogow3/7616929903a4c801107b166e0778785a/raw/.bash_aliases -o ~/.bash_aliases
 
 	# disable apt news
 	sudo pro config set apt_news=false
@@ -196,6 +199,10 @@ then
 		https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 	sudo dnf update --refresh -y
 	
+	# bash_aliases
+	mkdir -p ~/.bashrc.d
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -o ~/.bashrc.d/bash_aliases
+
 	# gnome-shell extensions
 	sudo dnf install -y \
 		gnome-shell-extension-dash-to-dock \
@@ -251,19 +258,6 @@ then
 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-
-	# bash_aliases
-	mkdir -p ~/.bashrc.d && touch $_/bash_aliases
-
-	echo '
-	# upd = update all
-	alias upd="sudo dnf update -y; flatpak update -y; sudo dnf autoremove -y"
-
-	# git status on bash
-	source ~/.git-prompt.sh
-	export GIT_PS1_SHOWDIRTYSTATE=1
-	export PS1="\[\e[38;5;10m\]\u\[\e[m\]@\[\e[38;5;10m\]\h\[\e[m\]:\[\e[38;5;32m\]\w\[\e[m\]\[\e[38;5;9m\]\$(__git_ps1)\[\e[m\]\n\$ "
-	' | tee -a ~/.bashrc.d/bash_aliases > /dev/null
 
 	# docker
 	sudo dnf -y install dnf-plugins-core
@@ -408,9 +402,9 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
 # wallpaper
-sudo curl -L https://raw.githubusercontent.com/twinysam/ubuntu-wallpapers/applied/ubuntu/artful/Saffron_by_Rakesh_Yadav.png -o /usr/share/backgrounds/Saffron_by_Rakesh_Yadav.png
-gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/Saffron_by_Rakesh_Yadav.png"
-gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/Saffron_by_Rakesh_Yadav.png"
+sudo curl -L https://github.com/diogow3/linux-post-install/raw/main/backgrounds/gnokii-clyde-he.jpg -o /usr/share/backgrounds/gnokii-clyde-he.jpg
+gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gnokii-clyde-he.jpg"
+gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gnokii-clyde-he.jpg"
 
 # remove wallpaper
 #gsettings set org.gnome.desktop.background primary-color '#444444'
