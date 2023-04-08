@@ -296,7 +296,7 @@ then
 	sudo dnf install -y code
 
 	# optional gnome-shell extensions
-	#echo -e "\n Install the extensions \n"
+	#echo -e "\n Install the connector, reload page and enable the extension \n"
 	#firefox \
 	#	https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding > /dev/null
 
