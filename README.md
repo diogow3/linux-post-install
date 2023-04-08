@@ -2,8 +2,8 @@
 Post install shell script for Ubuntu, Linux Mint and Fedora
 
 ## Instructions
-do NOT run with sudo
+Download, change permission and run `linux-post-install.sh` without sudo
 ```
-chmod +x ./linux-post-install
-./linux-post-install
+chmod +x ./linux-post-install.sh
+./linux-post-install.sh
 ```
