@@ -31,7 +31,7 @@ then
 	sudo apt update; sudo apt upgrade -y; sudo snap refresh; sudo apt autoremove -y; sudo apt autoclean
 
 	# .bash_aliases
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -o ~/.bash_aliases
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
 
 	# essential
 	sudo apt install -y \
@@ -57,7 +57,7 @@ then
 	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
 
 	# .bash_aliases
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -o ~/.bash_aliases
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
 
 	# purge xed
 	sudo apt purge -y xed
@@ -201,7 +201,7 @@ then
 	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -o ~/.bashrc.d/bash_aliases
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
 
 	# gnome-shell extensions
 	sudo dnf install -y \
