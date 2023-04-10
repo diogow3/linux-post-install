@@ -233,6 +233,7 @@ then
 	sudo dnf install -y \
 		gnome-tweaks \
 		dkms \
+		kernel-devel \
 		python3-smbc \
 		curl \
 		wget \
