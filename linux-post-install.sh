@@ -413,7 +413,7 @@ gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/b
 
 # create user directories
 mkdir -p ~/temp
-mkdir -p ~/programs
+mkdir -p ~/programas
 mkdir -p ~/dev
 
 # install dev fonts
