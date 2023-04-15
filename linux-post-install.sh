@@ -403,9 +403,9 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
 # wallpaper
-sudo curl -L https://github.com/diogow3/linux-post-install/raw/main/backgrounds/gnokii-clyde-he.jpg -o /usr/share/backgrounds/gnokii-clyde-he.jpg
-gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gnokii-clyde-he.jpg"
-gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gnokii-clyde-he.jpg"
+sudo curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o /usr/share/backgrounds/gray.png
+gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gray.png"
+gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gray.png"
 
 # remove wallpaper
 #gsettings set org.gnome.desktop.background primary-color '#444444'
