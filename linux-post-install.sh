@@ -407,10 +407,6 @@ sudo curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o /u
 gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gray.png"
 gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gray.png"
 
-# remove wallpaper
-#gsettings set org.gnome.desktop.background primary-color '#444444'
-#gsettings set org.gnome.desktop.background picture-options 'none'
-
 # create user directories
 mkdir -p ~/temp
 mkdir -p ~/programas
