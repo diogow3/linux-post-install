@@ -253,6 +253,9 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 
+	# uninstall .rpm to replace with the flatpak version
+	sudo dnf remove -y libreoffice*
+	
 	# nvidia drivers
 	#sudo dnf install akmod-nvidia -y
 	#sudo dnf install xorg-x11-drv-nvidia-cuda
@@ -260,7 +263,7 @@ then
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
-	# docker
+	# docker (fedora 37)
 	sudo dnf -y install dnf-plugins-core
 	sudo dnf config-manager \
 	  --add-repo \
@@ -278,7 +281,6 @@ then
 	sudo dnf install -y java-17-amazon-corretto-devel
 
 	# nodejs lts
-	curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
 	sudo dnf install -y nodejs
 
 	# dotnet 6
