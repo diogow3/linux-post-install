@@ -263,17 +263,9 @@ then
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
-	# docker (fedora 37)
-	sudo dnf -y install dnf-plugins-core
-	sudo dnf config-manager \
-	  --add-repo \
-	  https://download.docker.com/linux/fedora/docker-ce.repo
-	sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-	sudo groupadd docker
-	sudo usermod -aG docker $USER
-	sudo systemctl start docker
-	sudo systemctl enable docker.service
-	sudo systemctl enable containerd.service
+	# docker podman
+	sudo dnf install -y podman podman-docker
+	sudo systemctl enable --now podman
 
 	# java corretto 17
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
