@@ -263,9 +263,10 @@ then
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
-	# docker podman
+	# podman docker
 	sudo dnf install -y podman podman-docker
 	sudo systemctl enable --now podman
+	sudo touch /etc/containers/nodocker
 
 	# java corretto 17
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
