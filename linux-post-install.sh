@@ -129,9 +129,6 @@ then
 	# disable apt news
 	sudo pro config set apt_news=false
 
-	# add 'new empty file' in the context menu
-	touch ~/Modelos/Arquivo\ Vazio
-
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 	sudo apt install -y ubuntu-restricted-extras
@@ -236,7 +233,6 @@ then
 	mkdir -p ~/Modelos
 	xdg-user-dirs-update --set TEMPLATES ~/Modelos
 	nautilus -q && nautilus
-	touch ~/Modelos/Arquivo\ Vazio
 	
 	# essential
 	sudo dnf install -y \
@@ -409,6 +405,9 @@ gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/b
 mkdir -p ~/temp
 mkdir -p ~/programas
 mkdir -p ~/dev
+
+# add 'new empty file' in the context menu
+touch ~/Modelos/Arquivo\ Vazio
 
 # install dev fonts
 wget -c https://fonts.google.com/download?family=JetBrains%20Mono -O ~/temp/JetBrains_Mono.zip
