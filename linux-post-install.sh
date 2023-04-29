@@ -129,6 +129,9 @@ then
 	# disable apt news
 	sudo pro config set apt_news=false
 
+	# add 'new empty file' in the context menu
+	touch ~/Modelos/Arquivo\ Vazio
+
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 	sudo apt install -y ubuntu-restricted-extras
@@ -229,6 +232,12 @@ then
 	gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
 	gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
 	
+	# restore Templates functionality and add 'new empty file' in the context menu
+	mkdir -p ~/Modelos
+	xdg-user-dirs-update --set TEMPLATES ~/Modelos
+	nautilus -q && nautilus
+	touch ~/Modelos/Arquivo\ Vazio
+	
 	# essential
 	sudo dnf install -y \
 		gnome-tweaks \
@@ -268,7 +277,7 @@ then
 	sudo systemctl enable --now podman
 	sudo touch /etc/containers/nodocker
 
-	# java corretto 17
+	# java 17 corretto
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
 	sudo curl -L -o /etc/yum.repos.d/corretto.repo https://yum.corretto.aws/corretto.repo
 	sudo dnf install -y java-17-amazon-corretto-devel
@@ -366,12 +375,6 @@ then
 	# disable dynamic workspaces
 	gsettings set org.gnome.mutter dynamic-workspaces false
 	gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
-	
-	# restore Templates functionality and add 'new empty file' in nautilus context menu
-	mkdir -p ~/Templates
-	xdg-user-dirs-update --set TEMPLATES ~/Templates
-	nautilus -q && nautilus
-	touch ~/Templates/Arquivo\ Vazio
 
 	# flathub
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
