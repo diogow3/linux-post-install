@@ -59,13 +59,10 @@ then
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
 
-	# purge xed
-	sudo apt purge -y xed
-
 	# essential
 	sudo apt install -y \
 		firefox-locale-pt \
-		gnome-text-editor
+		sublime-text
 
 	# desktop adjustments
 	gsettings set org.gnome.TextEditor restore-session false
