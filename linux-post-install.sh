@@ -439,16 +439,6 @@ flatpak install -y \
 	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
-# homebrew package manager
-# https://formulae.brew.sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# homebrew softwares
-/home/linuxbrew/.linuxbrew/bin/brew install \
-	go \
-	watchman
-
 # reboot
 echo -e "\n Reboot Now \n"
 sudo reboot
