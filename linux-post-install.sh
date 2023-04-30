@@ -107,6 +107,7 @@ then
 		software-properties-common \
 		tree \
 		python3 \
+		python3-pip \
 		python3-venv \
 		python3-smbc \
 		smbclient \
@@ -240,6 +241,7 @@ then
 		gnome-tweaks \
 		dkms \
 		kernel-devel \
+		python3-pip \
 		python3-venv \
 		python3-smbc \
 		curl \
