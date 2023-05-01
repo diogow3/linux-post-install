@@ -120,6 +120,7 @@ then
 		gparted gpart \
 		dconf-editor \
 		synaptic \
+		gcolor3 \
 		uget 
 
 	# uninstall .deb to replace with the flatpak version
@@ -254,6 +255,7 @@ then
 	sudo dnf install -y \
 		gparted gpart \
 		dconf-editor \
+		gcolor3 \
 		uget
 	
 	# build tools
@@ -437,7 +439,6 @@ flatpak install -y \
 	flathub com.getpostman.Postman \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop \
-	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
 # reboot
