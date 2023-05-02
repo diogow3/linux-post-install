@@ -460,8 +460,7 @@ fi
 
 # homebrew softwares
 /home/linuxbrew/.linuxbrew/bin/brew install \
-	go \
-	watchman
+	go
 
 # reboot
 echo -e "\n Reboot Now \n"
