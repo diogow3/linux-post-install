@@ -104,8 +104,6 @@ then
 		software-properties-common \
 		tree \
 		python3 \
-		python3-pip \
-		python3-venv \
 		python3-smbc \
 		smbclient \
 		exfat-fuse \
@@ -239,8 +237,6 @@ then
 		gnome-tweaks \
 		dkms \
 		kernel-devel \
-		python3-pip \
-		python3-venv \
 		python3-smbc \
 		curl \
 		wget \
@@ -446,9 +442,22 @@ flatpak install -y \
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
+then
+	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+fi
+
+if [[ -n "${OS_FEDORA-}" ]]
+then
+	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.bash_profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
+fi
+
 # homebrew softwares
 /home/linuxbrew/.linuxbrew/bin/brew install \
 	go \
+	pipenv \
 	watchman
 
 # reboot
