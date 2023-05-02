@@ -2,7 +2,7 @@
 ## save in ~/.bash_aliases
 
 # upd = update all
-alias upd='sudo apt update; sudo apt dist-upgrade -y; flatpak update -y; sudo apt autoremove -y; sudo apt autoclean'
+alias upd='sudo apt update; sudo apt dist-upgrade -y; flatpak update -y; sudo upgrade brew; sudo apt autoremove -y; sudo apt autoclean'
 
 # nav
 alias ..='cd ..'
@@ -28,6 +28,9 @@ alias ips='ip -c -br a'
 source /etc/bash_completion.d/git-prompt
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[38;5;9m\]$(__git_ps1 "(%s)")\[\033[0m\]\n\$ '
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 ## docker aliases
 # stop all running containers
