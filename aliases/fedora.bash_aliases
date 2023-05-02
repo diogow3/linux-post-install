@@ -96,9 +96,6 @@ source ~/.git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1='\[\e[38;5;10m\]\u@\h\[\e[m\]:\[\e[38;5;32m\]\w\[\e[m\]\[\e[38;5;9m\]$(__git_ps1)\[\e[m\]\n\$ '
 
-# Set PATH, MANPATH, etc., for Homebrew.
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 ## docker aliases
 # stop all running containers
 alias docker-stop='docker stop $(docker container list -q)'
