@@ -105,6 +105,8 @@ then
 		tree \
 		python3 \
 		python3-smbc \
+		python3-pip \
+		python3-venv \
 		smbclient \
 		exfat-fuse \
 		hfsprogs \
@@ -238,6 +240,8 @@ then
 		dkms \
 		kernel-devel \
 		python3-smbc \
+		python3-pip \
+		python3-venv \
 		curl \
 		wget \
 		micro \
@@ -457,7 +461,6 @@ fi
 # homebrew softwares
 /home/linuxbrew/.linuxbrew/bin/brew install \
 	go \
-	pipenv \
 	watchman
 
 # reboot
