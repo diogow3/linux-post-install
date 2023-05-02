@@ -69,7 +69,7 @@ if ! shopt -oq posix; then
 fi
 
 # upd = update all
-alias upd='sudo dnf update -y; flatpak update -y; sudo dnf autoremove -y'
+alias upd='sudo dnf update -y; flatpak update -y; sudo upgrade brew; sudo dnf autoremove -y'
 
 # nav
 alias ..='cd ..'
@@ -95,6 +95,9 @@ alias ips='ip -c -br a'
 source ~/.git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1='\[\e[38;5;10m\]\u@\h\[\e[m\]:\[\e[38;5;32m\]\w\[\e[m\]\[\e[38;5;9m\]$(__git_ps1)\[\e[m\]\n\$ '
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 ## docker aliases
 # stop all running containers
