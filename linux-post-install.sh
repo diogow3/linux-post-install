@@ -39,8 +39,10 @@ then
 		gnome-tweaks
 
 	# flatpak support
-	# https://flathub.org/apps
 	sudo apt install -y flatpak
+
+	# flathub https://flathub.org/apps
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 	# desktop adjustments
 	gsettings set org.gnome.gedit.preferences.editor wrap-mode 'none'
@@ -174,6 +176,9 @@ then
 	#sudo add-apt-repository 'deb https://apt.corretto.aws stable main' -y
 	#sudo apt update; sudo apt install -y java-17-amazon-corretto-jdk
 
+	# go
+	sudo apt install -y golang
+
 	# vs code
 	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
@@ -192,25 +197,9 @@ then
 	# update
 	sudo dnf update -y; sudo dnf autoremove -y
 	
-	# rpm fusion
-	sudo dnf install -y \
-		https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-	sudo dnf install -y \
-		https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-	sudo dnf update --refresh -y
-	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
-
-	# gnome-shell extensions
-	sudo dnf install -y \
-		gnome-shell-extension-dash-to-dock \
-		gnome-shell-extension-appindicator
-	
-	gnome-extensions enable dash-to-dock@micxgx.gmail.com
-	gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-	gnome-extensions disable background-logo@fedorahosted.org
 
 	# desktop adjustments
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
@@ -218,21 +207,19 @@ then
 	gsettings set org.gnome.TextEditor wrap-text false
 
 	# tab nav
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
+	
+	# super+tab = overview
+	gsettings set org.gnome.settings-daemon.plugins.media-keys search "['<Super>Tab']"
 	
 	# dock
 	gsettings set org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
 	gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true
 	gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
 	gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
-	
-	# restore Templates functionality and add 'new empty file' in the context menu
-	mkdir -p ~/Modelos
-	xdg-user-dirs-update --set TEMPLATES ~/Modelos
-	nautilus -q && nautilus
 	
 	# essential
 	sudo dnf install -y \
@@ -241,7 +228,6 @@ then
 		kernel-devel \
 		python3-smbc \
 		python3-pip \
-		python3-venv \
 		curl \
 		wget \
 		micro \
@@ -263,18 +249,19 @@ then
 
 	# uninstall .rpm to replace with the flatpak version
 	sudo dnf remove -y libreoffice*
-	
-	# nvidia drivers
-	#sudo dnf install akmod-nvidia -y
-	#sudo dnf install xorg-x11-drv-nvidia-cuda
 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
-	# podman docker
-	sudo dnf install -y podman podman-docker
-	sudo systemctl enable --now podman
-	sudo touch /etc/containers/nodocker
+	# docker
+	sudo dnf -y install dnf-plugins-core
+	sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+	sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	sudo systemctl start docker
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	sudo systemctl enable docker.service
+	sudo systemctl enable containerd.service
 
 	# java 17 corretto
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
@@ -287,16 +274,20 @@ then
 	# dotnet 6
 	sudo dnf install -y dotnet-sdk-6.0
 
+	# go
+	sudo dnf install -y golang
+
+	# sublime-text
+	sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+	sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+	sudo dnf update -y
+	sudo dnf install -y sublime-text
+
 	# vs code
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
-
-	# optional gnome-shell extensions
-	#echo -e "\n Install the connector, reload page and enable the extension \n"
-	#firefox \
-	#	https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding > /dev/null
 
 fi # end Fedora
 
@@ -363,7 +354,7 @@ then
 	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
 	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
 
-	gsettings set org.gnome.mutter center-new-windows true
+	#gsettings set org.gnome.mutter center-new-windows true
 	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
 	gsettings set org.gnome.desktop.interface clock-show-weekday true
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
@@ -375,12 +366,9 @@ then
 	gsettings set org.gnome.mutter dynamic-workspaces false
 	gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
 
-	# flathub
-	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-	# flatpak softwares
+	# extensions manager
 	flatpak install -y \
-		flathub org.gnome.Extensions
+		flathub com.mattjakeman.ExtensionManager
 
 fi # end Ubuntu, Fedora
 
@@ -440,27 +428,6 @@ flatpak install -y \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop \
 	flathub com.obsproject.Studio
-
-# homebrew package manager
-# https://formulae.brew.sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
-then
-	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-fi
-
-if [[ -n "${OS_FEDORA-}" ]]
-then
-	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.bash_profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
-fi
-
-# homebrew softwares
-/home/linuxbrew/.linuxbrew/bin/brew install \
-	go
 
 # reboot
 echo -e "\n Reboot Now \n"

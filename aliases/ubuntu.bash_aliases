@@ -2,7 +2,7 @@
 ## save in ~/.bash_aliases
 
 # upd = update all
-alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; brew upgrade; sudo apt autoremove -y; sudo apt autoclean'
+alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; sudo apt autoremove -y; sudo apt autoclean'
 
 # nav
 alias ..='cd ..'
