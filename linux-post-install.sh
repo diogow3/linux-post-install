@@ -107,8 +107,6 @@ then
 		tree \
 		python3 \
 		python3-smbc \
-		python3-pip \
-		python3-venv \
 		smbclient \
 		exfat-fuse \
 		hfsprogs \
@@ -157,13 +155,6 @@ then
 	&& sudo apt update \
 	&& sudo apt install gh -y
 
-	# nodejs lts
-	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - &&\
-	sudo apt install -y nodejs
-
-	# dotnet
-	sudo apt update; sudo apt install -y dotnet-sdk-6.0
-
 	# java 17 jdk eclipse temurin
 	sudo apt install -y wget apt-transport-https
 	mkdir -p /etc/apt/keyrings
@@ -175,6 +166,19 @@ then
 	#curl -sL https://apt.corretto.aws/corretto.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/corretto.gpg >/dev/null
 	#sudo add-apt-repository 'deb https://apt.corretto.aws stable main' -y
 	#sudo apt update; sudo apt install -y java-17-amazon-corretto-jdk
+
+	# nodejs lts
+	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - &&\
+	sudo apt install -y nodejs
+
+	# python pipenv
+	sudo apt install -y python3-pip python3-venv
+	pip install pipenv
+	echo '# python .venv in project folder' >> ~/.profile
+	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
+
+	# dotnet
+	sudo apt update; sudo apt install -y dotnet-sdk-6.0
 
 	# go
 	sudo apt install -y golang
@@ -227,7 +231,6 @@ then
 		dkms \
 		kernel-devel \
 		python3-smbc \
-		python3-pip \
 		curl \
 		wget \
 		micro \
@@ -263,6 +266,9 @@ then
 	sudo systemctl enable docker.service
 	sudo systemctl enable containerd.service
 
+	# github cli
+	sudo dnf install -y gh
+
 	# java 17 corretto
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
 	sudo curl -L -o /etc/yum.repos.d/corretto.repo https://yum.corretto.aws/corretto.repo
@@ -270,6 +276,12 @@ then
 
 	# nodejs lts
 	sudo dnf install -y nodejs
+
+	# python3 pipenv
+	sudo dnf install -y python3-pip python3-virtualenv
+	pip install pipenv
+	echo '# python .venv in project folder' >> ~/.bash_profile
+	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 
 	# dotnet 6
 	sudo dnf install -y dotnet-sdk-6.0
@@ -288,6 +300,9 @@ then
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
+
+	# After rebooting, open extensions manager and install
+	# Dash to Panel, ArcMenu, AppIndicator, DING
 
 fi # end Fedora
 
