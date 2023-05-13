@@ -207,6 +207,7 @@ then
 
 	# desktop adjustments
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+	gsettings set org.gnome.desktop.interface enable-hot-corners false
 	gsettings set org.gnome.TextEditor restore-session false
 	gsettings set org.gnome.TextEditor wrap-text false
 
@@ -302,7 +303,7 @@ then
 	sudo dnf install -y code
 
 	# After rebooting, open extensions manager and install
-	# Dash to Panel, ArcMenu, AppIndicator, DING
+	# Dash to Panel, ArcMenu, AppIndicator, DING, wireless hid
 
 fi # end Fedora
 
@@ -369,7 +370,7 @@ then
 	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
 	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
 
-	#gsettings set org.gnome.mutter center-new-windows true
+	gsettings set org.gnome.mutter center-new-windows true
 	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
 	gsettings set org.gnome.desktop.interface clock-show-weekday true
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
