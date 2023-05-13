@@ -1,0 +1,26 @@
+[/]
+activate-on-hover=true
+context-menu-shortcuts=[['ArcMenu Settings', '/home/user/.local/share/gnome-shell/extensions/arcmenu@arcmenu.com/media/icons/menu_icons/arcmenu-logo-symbolic.svg', 'ArcMenu_Settings'], ['Panel Extension Settings', 'application-x-addon-symbolic', 'ArcMenu_PanelExtensionSettings'], ['Separator', 'list-remove-symbolic', 'ArcMenu_Separator'], ['Power Options', 'system-shutdown-symbolic', 'ArcMenu_PowerOptions'], ['Activities Overview', 'view-fullscreen-symbolic', 'ArcMenu_ActivitiesOverview'], ['Show Desktop', 'computer-symbolic', 'ArcMenu_ShowDesktop']]
+custom-menu-button-icon-size=24.0
+disable-recently-installed-apps=false
+disable-tooltips=false
+extra-categories=[(0, false), (1, false), (2, true), (3, false), (4, false)]
+force-menu-location='BottomCentered'
+hide-overview-on-startup=true
+menu-background-color='rgba(48,48,49,0.98)'
+menu-border-color='rgb(60,60,60)'
+menu-button-appearance='Icon'
+menu-foreground-color='rgb(223,223,223)'
+menu-item-active-bg-color='rgb(25,98,163)'
+menu-item-active-fg-color='rgb(255,255,255)'
+menu-item-grid-icon-size='Default'
+menu-item-hover-bg-color='rgb(21,83,158)'
+menu-item-hover-fg-color='rgb(255,255,255)'
+menu-item-icon-size='Large'
+menu-layout='Mint'
+menu-separator-color='rgba(255,255,255,0.1)'
+mint-extra-buttons=[['Firefox', 'firefox', 'firefox.desktop'], ['Terminal', 'org.gnome.Terminal', 'org.gnome.Terminal.desktop'], ['Configurações', 'org.gnome.Settings', 'org.gnome.Settings.desktop'], ['Software', 'org.gnome.Software', 'ArcMenu_Software'], ['Arquivos', 'org.gnome.Nautilus', 'org.gnome.Nautilus.desktop'], ['Separator', 'list-remove-symbolic', 'ArcMenu_Separator'], ['Lock', 'changes-prevent-symbolic', 'ArcMenu_Lock'], ['Log Out...', 'system-log-out-symbolic', 'ArcMenu_LogOut'], ['Reiniciar...', 'system-reboot-symbolic', 'ArcMenu_Restart'], ['Power Off...', 'system-shutdown-symbolic', 'ArcMenu_PowerOff']]
+override-menu-theme=false
+prefs-visible-page=0
+search-entry-border-radius=(true, 25)
+show-activities-button=true
