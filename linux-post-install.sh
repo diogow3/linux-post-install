@@ -45,11 +45,11 @@ then
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 	# gnome store
-	#sudo apt install -y gnome-software-plugin-flatpak
+	sudo apt install -y gnome-software-plugin-flatpak
 	#sudo snap remove snap-store
 
 	# snap apps
-	#snap install sublime-text
+	sudo snap install sublime-text --classic
 
 fi # end Ubuntu
 
@@ -278,7 +278,7 @@ then
 	sudo dnf install -y nodejs
 
 	# python3 pipenv
-	sudo dnf install -y python3-pip python3-virtualenv
+	sudo dnf install -y python3-pip python3-virtualenv pipenv
 	echo '# python .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 
