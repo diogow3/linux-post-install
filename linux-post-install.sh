@@ -35,17 +35,21 @@ then
 
 	# essential
 	sudo apt install -y \
-		gnome-shell-extensions \
 		gnome-tweaks
-
-	# flatpak support
-	sudo apt install -y flatpak
-
-	# flathub https://flathub.org/apps
-	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 	# desktop adjustments
 	gsettings set org.gnome.gedit.preferences.editor wrap-mode 'none'
+	
+	# flatpak support and flathub https://flathub.org/apps
+	sudo apt install -y flatpak
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+	# gnome store
+	#sudo apt install -y gnome-software-plugin-flatpak
+	#sudo snap remove snap-store
+
+	# snap apps
+	#snap install sublime-text
 
 fi # end Ubuntu
 
@@ -135,7 +139,7 @@ then
 
 	# virtualization
 	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
-	#sudo apt install -y virt-manager gnome-boxes
+	sudo apt install -y virt-manager gnome-boxes
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
@@ -173,6 +177,7 @@ then
 
 	# python pipenv
 	sudo apt install -y python3-pip python3-venv
+	#sudo apt install -y pipenv
 	pip install pipenv
 	echo '# python .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
@@ -212,19 +217,13 @@ then
 	gsettings set org.gnome.TextEditor wrap-text false
 
 	# tab nav
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
-	
-	# super+tab = overview
-	gsettings set org.gnome.settings-daemon.plugins.media-keys search "['<Super>Tab']"
-	
-	# dock
-	gsettings set org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
-	gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true
-	gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
-	gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
+
+	# enable fractional scaling
+	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 	
 	# essential
 	sudo dnf install -y \
@@ -280,7 +279,6 @@ then
 
 	# python3 pipenv
 	sudo dnf install -y python3-pip python3-virtualenv
-	pip install pipenv
 	echo '# python .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 
@@ -303,7 +301,7 @@ then
 	sudo dnf install -y code
 
 	# After rebooting, open extensions manager and install
-	# Dash to Panel, ArcMenu, AppIndicator, DING, wireless hid
+	# Dash to Dock, AppIndicator, Desktop Icons, Wireless hid
 
 fi # end Fedora
 
@@ -375,12 +373,9 @@ then
 	gsettings set org.gnome.desktop.interface clock-show-weekday true
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
 
-	# enable fractional scaling
-	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-
 	# disable dynamic workspaces
-	gsettings set org.gnome.mutter dynamic-workspaces false
-	gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
+	#gsettings set org.gnome.mutter dynamic-workspaces false
+	#gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
 
 	# extensions manager
 	flatpak install -y \
