@@ -4,6 +4,9 @@
 # upd = update all
 alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; sudo apt autoremove -y; sudo apt autoclean'
 
+# update-app-store = reinstall gnome-software
+alias update-app-store='sudo snap remove snap-store; sudo apt install -y gnome-software-plugin-flatpak'
+
 # nav
 alias ..='cd ..'
 alias ...='cd ../..'
