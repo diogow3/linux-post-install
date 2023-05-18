@@ -46,7 +46,7 @@ then
 
 	# gnome store
 	sudo apt install -y gnome-software-plugin-flatpak
-	#sudo snap remove snap-store
+	sudo snap remove snap-store
 
 	# snap apps
 	sudo snap install sublime-text --classic
@@ -139,7 +139,7 @@ then
 
 	# virtualization
 	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
-	sudo apt install -y virt-manager gnome-boxes
+	sudo apt install -y virt-manager
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
