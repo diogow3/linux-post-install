@@ -36,11 +36,11 @@ then
 	# essential
 	sudo apt install -y \
 		gnome-tweaks
-
-	# desktop adjustments
-	gsettings set org.gnome.gedit.preferences.editor wrap-mode 'none'
 	
-	# flatpak support and flathub https://flathub.org/apps
+	# remove softwares
+	sudo apt purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku
+	
+	# flatpak and flathub https://flathub.org/apps
 	sudo apt install -y flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
