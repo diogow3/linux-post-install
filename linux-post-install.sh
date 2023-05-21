@@ -176,9 +176,9 @@ then
 	sudo apt install -y nodejs
 
 	# python pipenv
-	sudo apt install -y python3-pip python3-venv
+	sudo apt install -y python3 python3-pip python3-venv
 	#sudo apt install -y pipenv
-	pip install pipenv
+	pip install --user pipenv
 	echo '# python .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
 
