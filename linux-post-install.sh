@@ -278,7 +278,7 @@ then
 	sudo dnf install -y nodejs
 
 	# python3 pipenv
-	sudo dnf install -y python3-pip python3-virtualenv pipenv
+	sudo dnf install -y python3 python3-pip pipenv
 	echo '# python .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 
