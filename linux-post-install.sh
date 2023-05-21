@@ -176,10 +176,14 @@ then
 
 	# python pipenv
 	sudo apt install -y python3 python3-pip python3-venv
-	#sudo apt install -y pipenv # broken until ubuntu 23.04
+	#sudo apt install -y pipenv # broken up to ubuntu 23.04
 	pip install --user pipenv
-	echo '# python .venv in project folder' >> ~/.profile
+	echo '# python pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
+	
+	# python poetry
+	#sudo apt install -y python3 python3-pip python3-venv python3-poetry
+	#poetry config virtualenvs.in-project true
 
 	# dotnet
 	sudo apt update; sudo apt install -y dotnet-sdk-6.0
@@ -278,8 +282,12 @@ then
 
 	# python3 pipenv
 	sudo dnf install -y python3 python3-pip pipenv
-	echo '# python .venv in project folder' >> ~/.bash_profile
+	echo '# python pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
+	
+	# python poetry
+	#sudo dnf install -y python3 python3-pip python3-poetry
+	#python3 -m poetry config virtualenvs.in-project true
 
 	# dotnet 6
 	sudo dnf install -y dotnet-sdk-6.0
