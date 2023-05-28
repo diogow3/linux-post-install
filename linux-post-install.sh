@@ -16,7 +16,7 @@ elif [[ "${OS}" == "linuxmint" ]]
 then
   OS_LINUXMINT=1
 else
-  abort "Not supported"
+  abort "OS not supported"
 fi
 
 echo ${OS}
@@ -50,6 +50,10 @@ then
 
 	# snap apps
 	sudo snap install sublime-text --classic
+
+	# Optional:
+	# After rebooting, open extensions manager and install Dash to Panel
+	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'extensions'
 
 fi # end Ubuntu
 
@@ -101,7 +105,6 @@ then
 		mc \
 		htop \
 		tree \
-		git \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
 		python3 \
@@ -116,7 +119,6 @@ then
 		gparted gpart \
 		dconf-editor \
 		synaptic \
-		gitg \
 		gcolor3 \
 		uget 
 
@@ -135,6 +137,9 @@ then
 	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
 	sudo apt install -y virt-manager
 
+	# git, git flow, github cli, gitg
+	sudo apt install -y git git-flow gh gitg
+
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -144,13 +149,6 @@ then
 	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
-
-	# github cli
-	#type -p curl >/dev/null || sudo apt install curl -y
-	#curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-	#&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-	#&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-	sudo apt update; sudo apt install -y gh
 
 	# java 17 jdk eclipse temurin
 	sudo apt install -y wget apt-transport-https
@@ -170,13 +168,13 @@ then
 
 	# python pipenv
 	sudo apt install -y python3 python3-pip python3-venv
-	#sudo apt install -y pipenv # broken up to ubuntu 23.04
+	#sudo apt install -y pipenv # broken up to ubuntu 23.04, use pip install instead
 	pip install --user pipenv
 	echo '# python pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
 	
 	# python poetry
-	#sudo apt install -y python3 python3-pip python3-venv python3-poetry
+	#sudo apt install -y python3-poetry
 	#poetry config virtualenvs.in-project true
 
 	# dotnet
@@ -233,14 +231,12 @@ then
 		mc \
 		htop \
 		tree \
-		git \
 		neofetch
 
 	# softwares
 	sudo dnf install -y \
 		gparted gpart \
 		dconf-editor \
-		gitg \
 		gcolor3 \
 		uget
 	
@@ -249,6 +245,9 @@ then
 
 	# uninstall .rpm to replace with the flatpak version
 	sudo dnf remove -y libreoffice*
+
+	# git, git flow, github cli gitg
+	sudo dnf install -y git git-flow gh gitg
 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
@@ -262,9 +261,6 @@ then
 	sudo usermod -aG docker $USER
 	sudo systemctl enable docker.service
 	sudo systemctl enable containerd.service
-
-	# github cli
-	sudo dnf install -y gh
 
 	# java 17 corretto
 	sudo rpm --import https://yum.corretto.aws/corretto.key 
@@ -280,7 +276,7 @@ then
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 	
 	# python poetry
-	#sudo dnf install -y python3 python3-pip python3-poetry
+	#sudo dnf install -y python3-poetry
 	#python3 -m poetry config virtualenvs.in-project true
 
 	# dotnet 6
@@ -302,8 +298,8 @@ then
 	sudo dnf install -y code
 
 	# After rebooting, open extensions manager and install
-	# Dash to Dock, AppIndicator, Desktop Icons, Wireless hid
-	# Open Dash to Dock settings, import dashtodock_settings from the 'extensions' folder
+	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
+	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'extensions'
 
 fi # end Fedora
 

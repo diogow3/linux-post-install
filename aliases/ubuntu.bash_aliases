@@ -19,7 +19,7 @@ alias tree='tree --dirsfirst -F'
 alias mkdir='mkdir -pv'
 
 # alt ls
-alias ll='ls -AFlv --group-directories-first'
+alias lll='ls -AFlv --group-directories-first'
 
 # history grep
 alias h='history|grep'
