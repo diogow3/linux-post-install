@@ -94,27 +94,19 @@ then
 	# essential
 	sudo apt install -y \
 		build-essential \
-		nano \
+		curl \
 		wget \
+		nano \
 		micro \
 		mc \
 		htop \
-		git \
-		curl \
-		gnupg \
-		lsb-release \
-		apt-transport-https \
-		dkms \
-		linux-headers-generic \
-		ca-certificates \
-		software-properties-common \
 		tree \
+		git \
+		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
+		dkms linux-headers-generic \
 		python3 \
-		python3-smbc \
-		smbclient \
-		exfat-fuse \
-		hfsprogs \
-		ppa-purge \
+		python3-smbc smbclient \
+		exfat-fuse hfsprogs \
 		neofetch 
 
 	# softwares
@@ -124,14 +116,16 @@ then
 		gparted gpart \
 		dconf-editor \
 		synaptic \
+		gitk \
 		gcolor3 \
 		uget 
 
 	# uninstall .deb to replace with the flatpak version
 	sudo apt purge -y libreoffice*
 
-	# disable apt news
+	# disable apt ads
 	sudo pro config set apt_news=false
+	sudo systemctl disable ubuntu-advantage
 
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
@@ -231,8 +225,7 @@ then
 	# essential
 	sudo dnf install -y \
 		gnome-tweaks \
-		dkms \
-		kernel-devel \
+		dkms kernel-devel \
 		python3-smbc \
 		curl \
 		wget \
@@ -247,6 +240,7 @@ then
 	sudo dnf install -y \
 		gparted gpart \
 		dconf-editor \
+		gitk \
 		gcolor3 \
 		uget
 	
