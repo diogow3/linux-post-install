@@ -116,7 +116,7 @@ then
 		gparted gpart \
 		dconf-editor \
 		synaptic \
-		gitk \
+		gitg \
 		gcolor3 \
 		uget 
 
@@ -240,7 +240,7 @@ then
 	sudo dnf install -y \
 		gparted gpart \
 		dconf-editor \
-		gitk \
+		gitg \
 		gcolor3 \
 		uget
 	
