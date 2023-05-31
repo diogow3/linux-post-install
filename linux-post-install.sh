@@ -53,7 +53,7 @@ then
 
 	# Optional:
 	# After rebooting, open extensions manager and install Dash to Panel
-	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'extensions'
+	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'settings'
 
 fi # end Ubuntu
 
@@ -299,7 +299,7 @@ then
 
 	# After rebooting, open extensions manager and install
 	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
-	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'extensions'
+	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'settings'
 
 fi # end Fedora
 
