@@ -4,7 +4,7 @@
 # $ ./linux-post-install
 
 # check OS
-OS="$(. /etc/os-release && echo "$ID")"
+OS="$(. /etc/os-release && echo $ID)"
 
 if [[ "${OS}" == "ubuntu" ]]
 then
