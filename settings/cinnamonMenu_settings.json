@@ -128,7 +128,7 @@
         "units": "px",
         "description": "Icon size",
         "dependency": "menu-custom",
-        "value": 32
+        "value": 28.0
     },
     "menu-label": {
         "type": "entry",
