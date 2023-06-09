@@ -110,7 +110,7 @@ then
 		python3 \
 		python3-smbc smbclient \
 		exfat-fuse hfsprogs \
-		neofetch 
+		screenfetch 
 
 	# softwares
 	sudo apt install -y \
@@ -231,7 +231,7 @@ then
 		mc \
 		htop \
 		tree \
-		neofetch
+		screenfetch
 
 	# softwares
 	sudo dnf install -y \
