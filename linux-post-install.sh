@@ -38,7 +38,10 @@ then
 		gnome-tweaks
 	
 	# remove softwares
-	sudo apt purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku
+	sudo apt purge -y \
+		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
+		libreoffice* \
+		gedit
 	
 	# flatpak and flathub https://flathub.org/apps
 	sudo apt install -y flatpak
@@ -47,9 +50,6 @@ then
 	# gnome store
 	sudo apt install -y gnome-software-plugin-flatpak
 	sudo snap remove snap-store
-
-	# snap apps
-	sudo snap install sublime-text --classic
 
 	# Optional:
 	# After rebooting, open extensions manager and install Dash to Panel
@@ -72,11 +72,12 @@ then
 	# essential
 	sudo apt install -y \
 		firefox-locale-pt \
-		sublime-text
+		menulibre
 
-	# desktop adjustments
-	gsettings set org.gnome.TextEditor restore-session false
-	gsettings set org.gnome.TextEditor wrap-text false
+	# remove softwares
+	sudo apt purge -y \
+		libreoffice* \
+		xed
 
 	# theme
 	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
@@ -100,6 +101,7 @@ then
 		build-essential \
 		curl \
 		wget \
+		git \
 		nano \
 		micro \
 		mc \
@@ -115,15 +117,12 @@ then
 	# softwares
 	sudo apt install -y \
 		hardinfo \
-		menulibre \
 		gparted gpart \
 		dconf-editor \
 		synaptic \
+		gnome-text-editor \
 		gcolor3 \
-		uget 
-
-	# uninstall .deb to replace with the flatpak version
-	sudo apt purge -y libreoffice*
+		uget
 
 	# disable apt ads
 	sudo pro config set apt_news=false
@@ -137,8 +136,8 @@ then
 	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
 	sudo apt install -y virt-manager
 
-	# git, git flow, github cli, gitg
-	sudo apt install -y git git-flow gh gitg
+	# git flow, github cli, gitg
+	sudo apt install -y git-flow gh gitg
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
@@ -166,16 +165,13 @@ then
 	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - &&\
 	sudo apt install -y nodejs
 
-	# python pipenv
-	sudo apt install -y python3 python3-pip python3-venv
+	# pipenv, poetry
+	sudo apt install -y python3-pip python3-venv python3-poetry
 	#sudo apt install -y pipenv # broken up to ubuntu 23.04, use pip install instead
 	pip install --user pipenv
 	echo '# python pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
-	
-	# python poetry
-	#sudo apt install -y python3-poetry
-	#poetry config virtualenvs.in-project true
+	poetry config virtualenvs.in-project true
 
 	# dotnet
 	sudo apt update; sudo apt install -y dotnet-sdk-6.0
@@ -224,9 +220,11 @@ then
 	sudo dnf install -y \
 		gnome-tweaks \
 		dkms kernel-devel \
+		python3 \
 		python3-smbc \
 		curl \
 		wget \
+		git \
 		micro \
 		mc \
 		htop \
@@ -243,11 +241,12 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 
-	# uninstall .rpm to replace with the flatpak version
-	sudo dnf remove -y libreoffice*
+	# remove softwares
+	sudo dnf remove -y \
+		libreoffice*
 
-	# git, git flow, github cli gitg
-	sudo dnf install -y git git-flow gh gitg
+	# git flow, github cli gitg
+	sudo dnf install -y git-flow gh gitg
 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
@@ -270,26 +269,17 @@ then
 	# nodejs lts
 	sudo dnf install -y nodejs
 
-	# python3 pipenv
-	sudo dnf install -y python3 python3-pip pipenv
+	# pipenv, poetry
+	sudo dnf install -y python3-pip pipenv python3-poetry
 	echo '# python pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
-	
-	# python poetry
-	#sudo dnf install -y python3-poetry
-	#python3 -m poetry config virtualenvs.in-project true
+	python3 -m poetry config virtualenvs.in-project true
 
 	# dotnet 6
 	sudo dnf install -y dotnet-sdk-6.0
 
 	# go
 	sudo dnf install -y golang
-
-	# sublime-text
-	sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
-	sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-	sudo dnf update -y
-	sudo dnf install -y sublime-text
 
 	# vs code
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -371,10 +361,6 @@ then
 	gsettings set org.gnome.desktop.interface clock-show-weekday true
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
 
-	# disable dynamic workspaces
-	#gsettings set org.gnome.mutter dynamic-workspaces false
-	#gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
-
 	# extensions manager
 	flatpak install -y \
 		flathub com.mattjakeman.ExtensionManager
@@ -387,6 +373,10 @@ fi # end Ubuntu, Fedora
 
 # set clock to local time to use dual boot with windows
 timedatectl set-local-rtc 1 --adjust-system-clock
+
+# text editor
+gsettings set org.gnome.TextEditor restore-session false
+gsettings set org.gnome.TextEditor wrap-text false
 
 # terminal color white on black
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-columns 100
@@ -421,22 +411,26 @@ rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
 # git configuration
 git config --global init.defaultBranch main
 
-# flatpak softwares
+# flatpak essential
 flatpak install -y \
 	flathub com.google.Chrome \
+	flathub org.libreoffice.LibreOffice \
+	flathub org.gimp.GIMP \
+	flathub org.videolan.VLC
+
+# flatpak softwares
+flatpak install -y \
 	flathub com.spotify.Client \
 	flathub org.qbittorrent.qBittorrent \
 	flathub org.nickvision.tubeconverter \
-	flathub org.gimp.GIMP \
-	flathub org.videolan.VLC \
-	flathub org.libreoffice.LibreOffice 
+	flathub com.obsproject.Studio
+
 
 # flatpak dev softwares
 flatpak install -y \
 	flathub com.getpostman.Postman \
 	flathub io.dbeaver.DBeaverCommunity \
-	flathub io.github.shiftey.Desktop \
-	flathub com.obsproject.Studio
+	flathub io.github.shiftey.Desktop
 
 # reboot
 echo -e "\n Reboot Now \n"
