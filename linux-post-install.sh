@@ -154,7 +154,7 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-	# dotnet
+	# dotnet lts
 	sudo touch /etc/apt/preferences
 	declare apt_src="$(apt-cache policy '~ndotnet.*' | grep -v microsoft | grep -v security | grep '/ubuntu' | cut -d"/" -f3 | sort -u)"
 	echo "
@@ -252,7 +252,7 @@ then
 	dnf check-update
 	sudo dnf install -y code
 
-	# dotnet 6
+	# dotnet lts
 	sudo dnf install -y dotnet-sdk-6.0
 
 	# homebrew
@@ -384,12 +384,12 @@ rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
 # git default branch
 git config --global init.defaultBranch main
 
-# java jdk lts - sdkman
+# java jdk lts - via sdkman
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java
 
-# nodejs lts - nvm
+# nodejs lts - via nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
