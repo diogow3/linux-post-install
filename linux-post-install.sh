@@ -157,6 +157,11 @@ then
 	# dotnet
 	sudo apt update; sudo apt install -y dotnet-sdk-6.0
 
+	# homebrew
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 fi # end Ubuntu, Linux Mint
 
 
@@ -237,6 +242,11 @@ then
 
 	# dotnet 6
 	sudo dnf install -y dotnet-sdk-6.0
+
+	# homebrew
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 	# After rebooting, open extensions manager and install
 	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
@@ -372,27 +382,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
-# homebrew
-if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
-then
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-fi
-
-if [[ -n "${OS_FEDORA-}" ]]
-then
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
-fi
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # homebrew dev softwares
 brew install \
 	git git-flow-avh gh \
 	python3 pipenv poetry \
-	go \
-	kind
+	go
 
 # pipenv, poetry .venv in project folder
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
