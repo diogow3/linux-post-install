@@ -2,10 +2,10 @@
 ## save in ~/.bash_aliases
 
 # upd = update all
-alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; sudo apt autoremove -y; sudo apt autoclean'
+alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; brew upgrade; sdk upgrade; nvm install --lts; sudo apt autoremove -y; sudo apt autoclean'
 
 # update-app-store = reinstall gnome-software
-alias update-app-store='sudo snap remove snap-store; sudo apt install -y gnome-software-plugin-flatpak'
+alias update-app-store='sudo snap remove snap-store; sudo apt install -y gnome-software-plugin-flatpak; sudo apt purge -y gnome-software-plugin-snap'
 
 # nav
 alias ..='cd ..'

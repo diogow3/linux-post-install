@@ -70,7 +70,7 @@ if ! shopt -oq posix; then
 fi
 
 # upd = update all
-alias upd='sudo dnf update -y; flatpak update -y; sudo dnf autoremove -y'
+alias upd='sudo dnf update -y; flatpak update -y; brew upgrade; sdk upgrade; nvm install --lts; sudo dnf autoremove -y'
 
 # nav
 alias ..='cd ..'

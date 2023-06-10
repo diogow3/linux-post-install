@@ -48,8 +48,9 @@ then
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 	# gnome store
-	sudo apt install -y gnome-software-plugin-flatpak
 	sudo snap remove snap-store
+	sudo apt install -y gnome-software-plugin-flatpak
+	sudo apt purge -y gnome-software-plugin-snap
 
 	# Optional:
 	# After rebooting, open extensions manager and install Dash to Panel
@@ -109,8 +110,7 @@ then
 		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
-		python3 \
-		python3-smbc smbclient \
+		python3 python3-smbc smbclient \
 		exfat-fuse hfsprogs \
 		screenfetch 
 
@@ -122,7 +122,8 @@ then
 		synaptic \
 		gnome-text-editor \
 		gcolor3 \
-		uget
+		uget \
+		gitg
 
 	# disable apt ads
 	sudo pro config set apt_news=false
@@ -136,9 +137,6 @@ then
 	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
 	sudo apt install -y virt-manager
 
-	# git flow, github cli, gitg
-	sudo apt install -y git-flow gh gitg
-
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -149,42 +147,15 @@ then
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
 
-	# java 17 jdk eclipse temurin
-	sudo apt install -y wget apt-transport-https
-	mkdir -p /etc/apt/keyrings
-	wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | sudo tee /etc/apt/keyrings/adoptium.asc >/dev/null
-	echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^UBUNTU_CODENAME/{print$2}' /etc/os-release) main" | sudo tee /etc/apt/sources.list.d/adoptium.list >/dev/null
-	sudo apt update; sudo apt install -y temurin-17-jdk
-
-	# java 17 jdk amazon corretto (alternative)
-	#curl -sL https://apt.corretto.aws/corretto.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/corretto.gpg >/dev/null
-	#sudo add-apt-repository 'deb https://apt.corretto.aws stable main' -y
-	#sudo apt update; sudo apt install -y java-17-amazon-corretto-jdk
-
-	# nodejs lts
-	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - &&\
-	sudo apt install -y nodejs
-
-	# pipenv, poetry
-	sudo apt install -y python3-pip python3-venv python3-poetry
-	#sudo apt install -y pipenv # broken up to ubuntu 23.04, use pip install instead
-	pip install --user pipenv
-	echo '# python pipenv .venv in project folder' >> ~/.profile
-	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
-	poetry config virtualenvs.in-project true
-
-	# dotnet
-	sudo apt update; sudo apt install -y dotnet-sdk-6.0
-
-	# go
-	sudo apt install -y golang
-
 	# vs code
 	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
 	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
+
+	# dotnet
+	sudo apt update; sudo apt install -y dotnet-sdk-6.0
 
 fi # end Ubuntu, Linux Mint
 
@@ -220,8 +191,7 @@ then
 	sudo dnf install -y \
 		gnome-tweaks \
 		dkms kernel-devel \
-		python3 \
-		python3-smbc \
+		python3 python3-smbc \
 		curl \
 		wget \
 		git \
@@ -236,20 +206,18 @@ then
 		gparted gpart \
 		dconf-editor \
 		gcolor3 \
-		uget
+		uget \
+		gitg
 	
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 
+	# git-prompt
+	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
+
 	# remove softwares
 	sudo dnf remove -y \
 		libreoffice*
-
-	# git flow, github cli gitg
-	sudo dnf install -y git-flow gh gitg
-
-	# git-prompt
-	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
 	# docker
 	sudo dnf -y install dnf-plugins-core
@@ -261,31 +229,14 @@ then
 	sudo systemctl enable docker.service
 	sudo systemctl enable containerd.service
 
-	# java 17 corretto
-	sudo rpm --import https://yum.corretto.aws/corretto.key 
-	sudo curl -L -o /etc/yum.repos.d/corretto.repo https://yum.corretto.aws/corretto.repo
-	sudo dnf install -y java-17-amazon-corretto-devel
-
-	# nodejs lts
-	sudo dnf install -y nodejs
-
-	# pipenv, poetry
-	sudo dnf install -y python3-pip pipenv python3-poetry
-	echo '# python pipenv .venv in project folder' >> ~/.bash_profile
-	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
-	python3 -m poetry config virtualenvs.in-project true
-
-	# dotnet 6
-	sudo dnf install -y dotnet-sdk-6.0
-
-	# go
-	sudo dnf install -y golang
-
 	# vs code
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
+
+	# dotnet 6
+	sudo dnf install -y dotnet-sdk-6.0
 
 	# After rebooting, open extensions manager and install
 	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
@@ -408,8 +359,55 @@ mv ~/temp/jetbrains_mono/JetBrainsMono-Italic-VariableFont_wght.ttf ~/.local/sha
 fc-cache -f -v
 rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
 
-# git configuration
+# git default branch
 git config --global init.defaultBranch main
+
+# java jdk lts - sdkman
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java
+
+# nodejs lts - nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source "$HOME/.nvm/nvm.sh"
+nvm install --lts
+
+# homebrew
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
+then
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+fi
+
+if [[ -n "${OS_FEDORA-}" ]]
+then
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
+fi
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# homebrew dev softwares
+brew install \
+	git git-flow-avh gh \
+	python3 pipenv poetry \
+	go \
+	kind
+
+# pipenv, poetry .venv in project folder
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
+then
+	echo '# pipenv .venv in project folder' >> ~/.profile
+	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
+	poetry config virtualenvs.in-project true
+fi
+
+if [[ -n "${OS_FEDORA-}" ]]
+then
+	echo '# pipenv .venv in project folder' >> ~/.bash_profile
+	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
+	python3 -m poetry config virtualenvs.in-project true
+fi
 
 # flatpak essential
 flatpak install -y \
