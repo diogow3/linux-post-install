@@ -393,15 +393,15 @@ if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
-	poetry config virtualenvs.in-project true
 fi
 
 if [[ -n "${OS_FEDORA-}" ]]
 then
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
-	python3 -m poetry config virtualenvs.in-project true
 fi
+
+poetry config virtualenvs.in-project true
 
 # flatpak essential
 flatpak install -y \
