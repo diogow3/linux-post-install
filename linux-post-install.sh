@@ -154,9 +154,6 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
- 	# dotnet lts
-  	sudo apt install -y dotnet-sdk-6.0 
-
 	# homebrew
 	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
 	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
@@ -239,9 +236,6 @@ then
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
-
-	# dotnet lts
-	sudo dnf install -y dotnet-sdk-6.0
 
 	# homebrew
 	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
@@ -388,19 +382,27 @@ brew install \
 	python3 pipenv poetry \
 	go
 
-# pipenv, poetry .venv in project folder
+# Ubuntu, Linux Mint
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
+	# dotnet lts
+	sudo apt install -y dotnet-sdk-6.0
+	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
 fi
 
+# Fedora
 if [[ -n "${OS_FEDORA-}" ]]
 then
+	# dotnet lts
+	sudo dnf install -y dotnet-sdk-6.0
+	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 fi
 
+# poetry .venv in project folder
 poetry config virtualenvs.in-project true
 
 # flatpak essential
