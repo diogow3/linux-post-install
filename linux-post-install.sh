@@ -52,21 +52,6 @@ then
 	sudo apt install -y gnome-software-plugin-flatpak
 	sudo apt purge -y gnome-software-plugin-snap
 
- 	# dotnet lts via microsoft
-	sudo touch /etc/apt/preferences
-	declare apt_src=$(apt-cache policy '~ndotnet.*' | grep -v microsoft | grep -v security | grep '/ubuntu' | cut -d"/" -f3 | sort -u)
-	echo "
-	Package: dotnet* aspnet* netstandard*
-	Pin: origin \"$apt_src\"
-	Pin-Priority: -10" | sudo tee -a /etc/apt/preferences > /dev/null
-
-	declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
-	wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-	sudo dpkg -i packages-microsoft-prod.deb
-	rm packages-microsoft-prod.deb
-	
-	sudo apt update; sudo apt install -y dotnet-sdk-6.0
-
 	# Optional:
 	# After rebooting, open extensions manager and install Dash to Panel
 	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'settings'
@@ -103,9 +88,6 @@ then
 
 	# super+tab = overview
 	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
-
- 	# dotnet lts
-  	sudo apt install -y dotnet-sdk-6.0 
 
 fi # end Linux Mint
 
@@ -171,6 +153,9 @@ then
 	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
+
+ 	# dotnet lts
+  	sudo apt install -y dotnet-sdk-6.0 
 
 	# homebrew
 	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
@@ -443,5 +428,4 @@ flatpak install -y \
 echo -e "\n Reboot Now \n"
 sudo reboot
 
-# end Ubuntu, Linux Mint, Fedora
-
+# end
