@@ -376,6 +376,12 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
+# dotnet lts via microsoft script
+curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/temp/dotnet-install.sh
+chmod +x ~/temp/dotnet-install.sh
+~/temp/dotnet-install.sh -c LTS
+mv ~/temp/dotnet-install.sh ~/.dotnet/dotnet-install.sh
+
 # homebrew dev softwares
 brew install \
 	git git-flow-avh gh \
@@ -385,8 +391,9 @@ brew install \
 # Ubuntu, Linux Mint
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
-	# dotnet lts
-	sudo apt install -y dotnet-sdk-6.0
+	# dotnet bin
+	echo '# dotnet bin' >> ~/.profile
+	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.profile
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
@@ -395,8 +402,9 @@ fi
 # Fedora
 if [[ -n "${OS_FEDORA-}" ]]
 then
-	# dotnet lts
-	sudo dnf install -y dotnet-sdk-6.0
+	# dotnet bin
+	echo '# dotnet bin' >> ~/.bash_profile
+	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bash_profile
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
