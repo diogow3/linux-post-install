@@ -434,6 +434,7 @@ flatpak install -y \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop
 
+
 # reboot
 echo -e "\n Reboot Now \n"
 sudo reboot
