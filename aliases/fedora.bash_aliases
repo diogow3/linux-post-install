@@ -70,15 +70,17 @@ if ! shopt -oq posix; then
 fi
 
 # upd = update all
-alias upd=' sudo dnf update -y;
-            sudo dnf autoremove -y;
-            flatpak update -y;
-            brew upgrade'
+alias upd='
+    sudo dnf update -y;
+    sudo dnf autoremove -y;
+    flatpak update -y;
+    brew upgrade'
 
 # upd-dev = update other dev packages
-alias upd-dev=' sdk upgrade;
-                nvm install --lts;
-                ~/.dotnet/dotnet-install.sh -c lts'
+alias upd-dev='
+    sdk upgrade;
+    nvm install --lts;
+    ~/.dotnet/dotnet-install.sh -c lts'
 
 # nav
 alias ..='cd ..'
@@ -108,6 +110,7 @@ export PS1='\[\e[38;5;10m\]\u@\h\[\e[m\]:\[\e[38;5;32m\]\w\[\e[m\]\[\e[38;5;9m\]
 ## docker aliases
 # stop all running containers
 alias docker-stop='docker stop $(docker container list -q)'
+
 # remove all containers, images and networks
 alias docker-prune='docker container prune -f &&
                     docker rmi -f $(docker image list -aq) &&
@@ -123,5 +126,4 @@ alias docker-prune='docker container prune -f &&
 
 # run #1 avd device
 #alias emulator1="emulator -avd $(emulator -list-avds | awk '{print $1}')"
-
 

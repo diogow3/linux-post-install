@@ -2,17 +2,19 @@
 ## save in ~/.bash_aliases
 
 # upd = update all
-alias upd=' sudo apt update;
-            sudo apt dist-upgrade -y;
-            sudo apt autoremove -y;
-            sudo apt autoclean;
-            flatpak update -y;
-            brew upgrade'
+alias upd='
+    sudo apt update;
+    sudo apt dist-upgrade -y;
+    sudo apt autoremove -y;
+    sudo apt autoclean;
+    flatpak update -y;
+    brew upgrade'
 
 # upd-dev = update other dev packages
-alias upd-dev=' sdk upgrade;
-                nvm install --lts;
-                ~/.dotnet/dotnet-install.sh -c lts'
+alias upd-dev='
+    sdk upgrade;
+    nvm install --lts;
+    ~/.dotnet/dotnet-install.sh -c lts'
 
 # nav
 alias ..='cd ..'
@@ -42,10 +44,12 @@ export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\
 ## docker aliases
 # stop all running containers
 alias docker-stop='docker stop $(docker container list -q)'
+
 # remove all containers, images and networks
-alias docker-prune='docker container prune -f &&
-                    docker rmi -f $(docker image list -aq) &&
-                    docker network prune -f'
+alias docker-prune='
+    docker container prune -f &&
+    docker rmi -f $(docker image list -aq) &&
+    docker network prune -f'
 
 ## android aliases
 # android path
@@ -57,5 +61,4 @@ alias docker-prune='docker container prune -f &&
 
 # run #1 avd device
 #alias emulator1="emulator -avd $(emulator -list-avds | awk '{print $1}')"
-
 
