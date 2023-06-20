@@ -112,9 +112,10 @@ export PS1='\[\e[38;5;10m\]\u@\h\[\e[m\]:\[\e[38;5;32m\]\w\[\e[m\]\[\e[38;5;9m\]
 alias docker-stop='docker stop $(docker container list -q)'
 
 # remove all containers, images and networks
-alias docker-prune='docker container prune -f &&
-                    docker rmi -f $(docker image list -aq) &&
-                    docker network prune -f'
+alias docker-prune='
+    docker container prune -f &&
+    docker rmi -f $(docker image list -aq) &&
+    docker network prune -f'
 
 ## android aliases
 # android path
