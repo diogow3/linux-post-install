@@ -2,10 +2,23 @@
 ## save in ~/.bash_aliases
 
 # upd = update all
-alias upd='sudo apt update; sudo apt dist-upgrade -y; sudo snap refresh; flatpak update -y; brew upgrade; sdk upgrade; nvm install --lts; sudo apt autoremove -y; sudo apt autoclean'
+alias upd=' sudo apt update;
+            sudo apt dist-upgrade -y;
+            sudo apt autoremove -y;
+            sudo apt autoclean;
+            sudo snap refresh;
+            flatpak update -y;
+            brew upgrade'
+
+# upd-dev = update other dev packages
+alias upd-dev=' sdk upgrade;
+                nvm install --lts;
+                ~/.dotnet/dotnet-install.sh -c lts'
 
 # update-app-store = reinstall gnome-software
-alias update-app-store='sudo snap remove snap-store; sudo apt install -y gnome-software-plugin-flatpak; sudo apt purge -y gnome-software-plugin-snap'
+alias upd-app-store='   sudo snap remove snap-store;
+                        sudo apt install -y gnome-software-plugin-flatpak;
+                        sudo apt purge -y gnome-software-plugin-snap'
 
 # nav
 alias ..='cd ..'
@@ -36,7 +49,9 @@ export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\
 # stop all running containers
 alias docker-stop='docker stop $(docker container list -q)'
 # remove all containers, images and networks
-alias docker-prune='docker container prune -f && docker rmi -f $(docker image list -aq) && docker network prune -f'
+alias docker-prune='docker container prune -f &&
+                    docker rmi -f $(docker image list -aq) &&
+                    docker network prune -f'
 
 ## android aliases
 # android path

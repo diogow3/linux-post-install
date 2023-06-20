@@ -376,7 +376,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
-# dotnet lts via microsoft script
+# dotnet lts - via microsoft script
 curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/temp/dotnet-install.sh
 chmod +x ~/temp/dotnet-install.sh
 ~/temp/dotnet-install.sh -c LTS
