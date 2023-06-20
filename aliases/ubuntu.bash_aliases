@@ -1,7 +1,7 @@
 ## bash aliases and settings for Ubuntu
 ## save in ~/.bash_aliases
 
-# upd = update all
+# update all
 alias upd='
     sudo apt update;
     sudo apt dist-upgrade -y;
@@ -11,13 +11,13 @@ alias upd='
     flatpak update -y;
     brew upgrade'
 
-# upd-dev = update other dev packages
+# update other dev packages
 alias upd-dev='
     sdk upgrade;
     nvm install --lts;
     ~/.dotnet/dotnet-install.sh -c lts'
 
-# upd-app-store = reinstall gnome-software
+# reinstall gnome-software
 alias upd-app-store='
     sudo snap remove snap-store;
     sudo apt install -y gnome-software-plugin-flatpak;

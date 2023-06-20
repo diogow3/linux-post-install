@@ -69,14 +69,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# upd = update all
+# update all
 alias upd='
     sudo dnf update -y;
     sudo dnf autoremove -y;
     flatpak update -y;
     brew upgrade'
 
-# upd-dev = update other dev packages
+# update other dev packages
 alias upd-dev='
     sdk upgrade;
     nvm install --lts;

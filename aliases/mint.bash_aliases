@@ -1,7 +1,7 @@
 ## bash aliases and settings for Linux Mint
 ## save in ~/.bash_aliases
 
-# upd = update all
+# update all
 alias upd='
     sudo apt update;
     sudo apt dist-upgrade -y;
@@ -10,7 +10,7 @@ alias upd='
     flatpak update -y;
     brew upgrade'
 
-# upd-dev = update other dev packages
+# update other dev packages
 alias upd-dev='
     sdk upgrade;
     nvm install --lts;
