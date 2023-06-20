@@ -437,5 +437,4 @@ flatpak install -y \
 # reboot
 echo -e "\n Reboot Now \n"
 sudo reboot
-
 # end
