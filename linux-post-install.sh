@@ -154,11 +154,6 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-	# homebrew
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 fi # end Ubuntu, Linux Mint
 
 
@@ -236,11 +231,6 @@ then
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
-
-	# homebrew
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
-	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 	# After rebooting, open extensions manager and install
 	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
@@ -377,10 +367,14 @@ source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
 # dotnet lts - via microsoft script
-curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/temp/dotnet-install.sh
-chmod +x ~/temp/dotnet-install.sh
-~/temp/dotnet-install.sh -c LTS
-mv ~/temp/dotnet-install.sh ~/.dotnet/dotnet-install.sh
+mkdir -p ~/.dotnet
+curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/.dotnet/dotnet-install.sh
+chmod +x ~/.dotnet/dotnet-install.sh
+~/.dotnet/dotnet-install.sh -c LTS
+
+# homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # homebrew dev softwares
 brew install \
@@ -391,8 +385,11 @@ brew install \
 # Ubuntu, Linux Mint
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
-	# dotnet bin
-	echo '# dotnet bin' >> ~/.profile
+	# homebrew path
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+	# dotnet path
+	echo '# dotnet path' >> ~/.profile
 	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.profile
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.profile
@@ -402,8 +399,11 @@ fi
 # Fedora
 if [[ -n "${OS_FEDORA-}" ]]
 then
-	# dotnet bin
-	echo '# dotnet bin' >> ~/.bash_profile
+	# homebrew path
+	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
+	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
+	# dotnet path
+	echo '# dotnet path' >> ~/.bash_profile
 	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bash_profile
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
