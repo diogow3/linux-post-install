@@ -121,7 +121,6 @@ then
 		dconf-editor \
 		synaptic \
 		gnome-text-editor \
-		gcolor3 \
 		uget \
 		gitg
 
@@ -202,7 +201,6 @@ then
 	sudo dnf install -y \
 		gparted gpart \
 		dconf-editor \
-		gcolor3 \
 		uget \
 		gitg
 	
@@ -425,6 +423,7 @@ flatpak install -y \
 	flathub com.spotify.Client \
 	flathub org.qbittorrent.qBittorrent \
 	flathub org.nickvision.tubeconverter \
+	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
 
