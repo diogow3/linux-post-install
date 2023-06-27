@@ -255,7 +255,7 @@ fi # end Fedora
 if [[ -n "${OS_UBUNTU-}" || "${OS_FEDORA-}" ]]
 then
 
-	# auto categorize applications at each login
+	# create categories and auto-sort applications at each login
 
 	gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
 
@@ -397,6 +397,8 @@ then
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
+
+	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
 fi
 
 # Fedora PATH
@@ -411,6 +413,8 @@ then
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
+
+	sudo dnf update -y; sudo dnf autoremove -y
 fi
 
 # poetry .venv in project folder
@@ -431,13 +435,14 @@ flatpak install -y \
 	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
-
 # flatpak dev softwares
 flatpak install -y \
 	flathub com.getpostman.Postman \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop
 
+# flatpak update
+flatpak update -y
 
 # reboot
 echo -e "\n Reboot Now \n"
