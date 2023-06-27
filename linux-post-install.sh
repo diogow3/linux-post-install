@@ -33,6 +33,21 @@ then
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
 
+	# desktop adjustments
+	gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+	gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+
+	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
+
+	gsettings set org.gnome.shell.extensions.ding show-home false
+	gsettings set org.gnome.shell.extensions.ding keep-arranged true
+	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
+	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
+	
 	# essential
 	sudo apt install -y \
 		gnome-tweaks
@@ -70,6 +85,15 @@ then
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
 
+	# desktop adjustments
+	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
+	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
+	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
+	gsettings set org.cinnamon enabled-applets "['panel1:center:0:menu@cinnamon.org:0', 'panel1:left:0:separator@cinnamon.org:1', 'panel1:center:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:6:keyboard@cinnamon.org:8', 'panel1:right:7:favorites@cinnamon.org:9', 'panel1:right:8:network@cinnamon.org:10', 'panel1:right:9:sound@cinnamon.org:11', 'panel1:right:10:power@cinnamon.org:12', 'panel1:right:11:calendar@cinnamon.org:13', 'panel1:right:12:cornerbar@cinnamon.org:14', 'panel1:left:1:scale@cinnamon.org:15']"
+
+	# super+tab = overview
+	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
+	
 	# essential
 	sudo apt install -y \
 		firefox-locale-pt \
@@ -79,15 +103,6 @@ then
 	sudo apt purge -y \
 		libreoffice* \
 		xed
-
-	# theme
-	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
-	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
-	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
-	gsettings set org.cinnamon enabled-applets "['panel1:center:0:menu@cinnamon.org:0', 'panel1:left:0:separator@cinnamon.org:1', 'panel1:center:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:6:keyboard@cinnamon.org:8', 'panel1:right:7:favorites@cinnamon.org:9', 'panel1:right:8:network@cinnamon.org:10', 'panel1:right:9:sound@cinnamon.org:11', 'panel1:right:10:power@cinnamon.org:12', 'panel1:right:11:calendar@cinnamon.org:13', 'panel1:right:12:cornerbar@cinnamon.org:14', 'panel1:left:1:scale@cinnamon.org:15']"
-
-	# super+tab = overview
-	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
 
 fi # end Linux Mint
 
@@ -171,8 +186,6 @@ then
 	# desktop adjustments
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
 	gsettings set org.gnome.desktop.interface enable-hot-corners false
-	gsettings set org.gnome.TextEditor restore-session false
-	gsettings set org.gnome.TextEditor wrap-text false
 
 	# tab nav
 	gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
@@ -242,8 +255,18 @@ fi # end Fedora
 if [[ -n "${OS_UBUNTU-}" || "${OS_FEDORA-}" ]]
 then
 
-	# auto categorize applications at login
+	# auto categorize applications at each login
+
 	gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
+
+	if [[ "${LANG}" == "pt_BR.UTF-8" ]]
+	then
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
+	else
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
+	fi
 
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ name "AudioVideo.directory"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ categories "['AudioVideo', 'Audio', 'Video']"
@@ -269,39 +292,21 @@ then
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
 
-	#gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
-
-	#gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
-
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ name "Utility.directory"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ categories "['Utility']"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ translate true
 
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
+
 	# desktop adjustments
-
-	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
-
-	gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
-	gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
-
-	gsettings set org.gnome.shell.extensions.ding show-home false
-	gsettings set org.gnome.shell.extensions.ding keep-arranged true
-	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
-	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
-
 	gsettings set org.gnome.mutter center-new-windows true
 	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
 	gsettings set org.gnome.desktop.interface clock-show-weekday true
+
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
 
 	# extensions manager
@@ -380,7 +385,7 @@ brew install \
 	python3 pipenv poetry \
 	go
 
-# Ubuntu, Linux Mint
+# Ubuntu, Linux Mint PATH
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
 	# homebrew path
@@ -394,7 +399,7 @@ then
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
 fi
 
-# Fedora
+# Fedora PATH
 if [[ -n "${OS_FEDORA-}" ]]
 then
 	# homebrew path
