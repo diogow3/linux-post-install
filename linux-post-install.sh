@@ -27,8 +27,7 @@ echo ${OS}
 if [[ -n "${OS_UBUNTU-}" ]]
 then
 
-	# update
-	sudo apt update; sudo apt upgrade -y; sudo snap refresh; sudo apt autoremove -y; sudo apt autoclean
+	sudo apt update
 
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
@@ -48,15 +47,18 @@ then
 	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
 	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
 	
-	# essential
-	sudo apt install -y \
-		gnome-tweaks
-	
 	# remove softwares
 	sudo apt purge -y \
 		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
 		libreoffice* \
 		gedit
+	
+	# update
+	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
+
+	# essential
+	sudo apt install -y \
+		gnome-tweaks
 	
 	# flatpak and flathub https://flathub.org/apps
 	sudo apt install -y flatpak
@@ -78,9 +80,8 @@ fi # end Ubuntu
 # Linux Mint
 if [[ -n "${OS_LINUXMINT-}" ]]
 then
-
-	# update
-	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
+	
+	sudo apt update
 
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
@@ -94,15 +95,18 @@ then
 	# super+tab = overview
 	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
 	
-	# essential
-	sudo apt install -y \
-		firefox-locale-pt \
-		menulibre
-
 	# remove softwares
 	sudo apt purge -y \
 		libreoffice* \
 		xed
+	
+	# update
+	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
+
+	# essential
+	sudo apt install -y \
+		firefox-locale-pt \
+		menulibre
 
 fi # end Linux Mint
 
@@ -176,8 +180,7 @@ fi # end Ubuntu, Linux Mint
 if [[ -n "${OS_FEDORA-}" ]]
 then
 
-	# update
-	sudo dnf update -y; sudo dnf autoremove -y
+	sudo dnf update --assumeno
 	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
@@ -196,6 +199,13 @@ then
 	# enable fractional scaling
 	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 	
+	# remove softwares
+	sudo dnf remove -y \
+		libreoffice*
+	
+	# update
+	sudo dnf update -y; sudo dnf autoremove -y
+
 	# essential
 	sudo dnf install -y \
 		gnome-tweaks \
@@ -222,10 +232,6 @@ then
 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-
-	# remove softwares
-	sudo dnf remove -y \
-		libreoffice*
 
 	# docker
 	sudo dnf -y install dnf-plugins-core
@@ -397,8 +403,6 @@ then
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
-
-	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
 fi
 
 # Fedora PATH
@@ -413,14 +417,13 @@ then
 	# pipenv .venv in project folder
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
-
-	sudo dnf update -y; sudo dnf autoremove -y
 fi
 
 # poetry .venv in project folder
 poetry config virtualenvs.in-project true
 
 # flatpak essential
+flatpak update -y
 flatpak install -y \
 	flathub com.google.Chrome \
 	flathub org.libreoffice.LibreOffice \
@@ -440,9 +443,6 @@ flatpak install -y \
 	flathub com.getpostman.Postman \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop
-
-# flatpak update
-flatpak update -y
 
 # reboot
 echo -e "\n Reboot Now \n"
