@@ -1,8 +1,8 @@
 # linux-post-install
-Post install shell script for Ubuntu, Linux Mint and Fedora
+Post install shell script for Ubuntu and Fedora
 
 ## Installation
-* On Ubuntu and Linux Mint, first install curl
+* On Ubuntu, first install curl
 ```
 sudo apt update; sudo apt install -y curl
 ```
