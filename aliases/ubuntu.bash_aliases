@@ -1,4 +1,4 @@
-## bash aliases and settings for Ubuntu
+## Ubuntu bash aliases
 ## save in ~/.bash_aliases
 
 # update all

@@ -12,9 +12,6 @@ then
 elif [[ "${OS}" == "fedora" ]]
 then
   OS_FEDORA=1
-elif [[ "${OS}" == "linuxmint" ]]
-then
-  OS_LINUXMINT=1
 else
   abort "OS not supported"
 fi
@@ -46,20 +43,7 @@ then
 	gsettings set org.gnome.shell.extensions.ding keep-arranged true
 	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
 	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
-	
-	# remove softwares
-	sudo apt purge -y \
-		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
-		libreoffice* \
-		gedit
-	
-	# update
-	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
 
-	# essential
-	sudo apt install -y \
-		gnome-tweaks
-	
 	# flatpak and flathub https://flathub.org/apps
 	sudo apt install -y flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -69,52 +53,14 @@ then
 	sudo apt install -y gnome-software-plugin-flatpak
 	sudo apt purge -y gnome-software-plugin-snap
 
-	# Optional:
-	# After rebooting, open extensions manager and install Dash to Panel
-	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'settings'
-
-fi # end Ubuntu
-
-
-# -----------------------------------------------------------------------------------
-# Linux Mint
-if [[ -n "${OS_LINUXMINT-}" ]]
-then
-	
-	sudo apt update
-
-	# .bash_aliases
-	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
-
-	# desktop adjustments
-	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
-	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
-	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
-	gsettings set org.cinnamon enabled-applets "['panel1:center:0:menu@cinnamon.org:0', 'panel1:left:0:separator@cinnamon.org:1', 'panel1:center:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:6:keyboard@cinnamon.org:8', 'panel1:right:7:favorites@cinnamon.org:9', 'panel1:right:8:network@cinnamon.org:10', 'panel1:right:9:sound@cinnamon.org:11', 'panel1:right:10:power@cinnamon.org:12', 'panel1:right:11:calendar@cinnamon.org:13', 'panel1:right:12:cornerbar@cinnamon.org:14', 'panel1:left:1:scale@cinnamon.org:15']"
-
-	# super+tab = overview
-	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
-	
 	# remove softwares
 	sudo apt purge -y \
+		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
 		libreoffice* \
-		xed
+		gedit
 	
 	# update
-	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
-
-	# essential
-	sudo apt install -y \
-		firefox-locale-pt \
-		menulibre
-
-fi # end Linux Mint
-
-
-# -----------------------------------------------------------------------------------
-# Ubuntu, Linux Mint
-if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
-then
+	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
 
 	# essential
 	sudo apt install -y \
@@ -131,6 +77,7 @@ then
 		dkms linux-headers-generic \
 		python3 python3-smbc smbclient \
 		exfat-fuse hfsprogs \
+		gnome-tweaks \
 		screenfetch 
 
 	# softwares
@@ -172,7 +119,11 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-fi # end Ubuntu, Linux Mint
+	# Optional:
+	# After rebooting, open extensions manager and install Dash to Panel
+	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
+
+fi # end Ubuntu
 
 
 # -----------------------------------------------------------------------------------
@@ -251,82 +202,66 @@ then
 
 	# After rebooting, open extensions manager and install
 	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
-	# Open Dash to Panel settings, import dashtopanel_settings from the repo's folder 'settings'
+	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
 
 fi # end Fedora
 
 
 # -----------------------------------------------------------------------------------
-# Ubuntu, Fedora
-if [[ -n "${OS_UBUNTU-}" || "${OS_FEDORA-}" ]]
+# Ubuntu & Fedora
+
+# create categories folders, auto-sort applications at each login
+gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
+
+if [[ "${LANG}" == "pt_BR.UTF-8" ]]
 then
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
+else
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
+fi
 
-	# create categories and auto-sort applications at each login
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ name "AudioVideo.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ categories "['AudioVideo', 'Audio', 'Video']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ translate true
 
-	gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ name "Development.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ categories "['Development']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ translate true
 
-	if [[ "${LANG}" == "pt_BR.UTF-8" ]]
-	then
-		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
-		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
-	else
-		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
-		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
-	fi
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ name "Game.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ categories "['Game']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ name "AudioVideo.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ categories "['AudioVideo', 'Audio', 'Video']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ name "Graphics.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ categories "['Graphics']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ name "Development.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ categories "['Development']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ name "Network.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ categories "['Network']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ name "Game.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ categories "['Game']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name "Office.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ name "Graphics.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ categories "['Graphics']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ name "Utility.directory"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ categories "['Utility']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ name "Network.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ categories "['Network']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name "Office.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ name "Utility.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ categories "['Utility']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ translate true
+# desktop adjustments
+gsettings set org.gnome.mutter center-new-windows true
+gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
+gsettings set org.gnome.desktop.interface clock-show-weekday true
 
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
-
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
-
-	# desktop adjustments
-	gsettings set org.gnome.mutter center-new-windows true
-	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
-	gsettings set org.gnome.desktop.interface clock-show-weekday true
-
-	gsettings set org.gnome.desktop.privacy remember-recent-files false
-
-	# extensions manager
-	flatpak install -y \
-		flathub com.mattjakeman.ExtensionManager
-
-fi # end Ubuntu, Fedora
-
-
-# -----------------------------------------------------------------------------------
-# Ubuntu, Linux Mint, Fedora
-
-# set clock to local time to use dual boot with windows
-timedatectl set-local-rtc 1 --adjust-system-clock
+gsettings set org.gnome.desktop.privacy remember-recent-files false
 
 # text editor
 gsettings set org.gnome.TextEditor restore-session false
@@ -339,6 +274,9 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ bold-is-bright true
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ background-color 'rgb(0,0,0)'
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
+
+# set clock to local time to use dual boot with windows
+timedatectl set-local-rtc 1 --adjust-system-clock
 
 # wallpaper
 sudo curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o /usr/share/backgrounds/gray.png
@@ -361,9 +299,6 @@ mv ~/temp/jetbrains_mono/JetBrainsMono-VariableFont_wght.ttf ~/.local/share/font
 mv ~/temp/jetbrains_mono/JetBrainsMono-Italic-VariableFont_wght.ttf ~/.local/share/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf
 fc-cache -f -v
 rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
-
-# git default branch
-git config --global init.defaultBranch main
 
 # java jdk lts - via sdkman
 curl -s "https://get.sdkman.io" | bash
@@ -391,8 +326,8 @@ brew install \
 	python3 pipenv poetry \
 	go
 
-# Ubuntu, Linux Mint PATH
-if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
+# Ubuntu PATH
+if [[ -n "${OS_UBUNTU-}" ]]
 then
 	# homebrew path
 	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
@@ -419,6 +354,9 @@ then
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 fi
 
+# git default branch
+git config --global init.defaultBranch main
+
 # poetry .venv in project folder
 poetry config virtualenvs.in-project true
 
@@ -428,7 +366,8 @@ flatpak install -y \
 	flathub com.google.Chrome \
 	flathub org.libreoffice.LibreOffice \
 	flathub org.gimp.GIMP \
-	flathub org.videolan.VLC
+	flathub org.videolan.VLC \
+	flathub com.mattjakeman.ExtensionManager
 
 # flatpak softwares
 flatpak install -y \

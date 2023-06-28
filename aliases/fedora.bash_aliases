@@ -1,4 +1,4 @@
-## bash aliases and settings for Fedora
+## Fedora bash aliases
 ## save in ~/.bashrc.d/bash_aliases
 
 # If not running interactively, don't do anything
