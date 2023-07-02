@@ -169,6 +169,7 @@ then
 		mc \
 		htop \
 		tree \
+  		file-roller \
 		screenfetch
 
 	# softwares
