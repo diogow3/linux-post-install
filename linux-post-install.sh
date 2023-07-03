@@ -281,7 +281,7 @@ timedatectl set-local-rtc 1 --adjust-system-clock
 
 # wallpaper
 declare imgfolder="$(xdg-user-dir PICTURES)"
-curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o ${imgfolder}/gray.png
+curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
 gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
 gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
 
