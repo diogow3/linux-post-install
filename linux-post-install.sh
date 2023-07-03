@@ -280,9 +280,10 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 timedatectl set-local-rtc 1 --adjust-system-clock
 
 # wallpaper
-sudo curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o /usr/share/backgrounds/gray.png
-gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gray.png"
-gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gray.png"
+declare imgfolder="$(xdg-user-dir PICTURES)"
+curl -L https://images2.imgbox.com/85/cf/rjDEHG14_o.png?download=true -o ${imgfolder}/gray.png
+gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
+gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
 
 # create user directories
 mkdir -p ~/temp
