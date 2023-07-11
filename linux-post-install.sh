@@ -88,6 +88,7 @@ then
 		synaptic \
 		gnome-text-editor \
 		uget \
+  		gufw \
 		gitg
 
 	# disable apt ads
@@ -177,6 +178,7 @@ then
 		gparted gpart \
 		dconf-editor \
 		uget \
+  		gufw \
 		gitg
 	
 	# build tools
