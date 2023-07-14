@@ -70,15 +70,14 @@ then
 		git \
 		nano \
 		micro \
+  		tree \
 		mc \
 		htop \
-		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
 		python3 python3-smbc smbclient \
 		exfat-fuse hfsprogs \
-		gnome-tweaks \
-		screenfetch 
+		gnome-tweaks 
 
 	# softwares
 	sudo apt install -y \
@@ -88,7 +87,6 @@ then
 		synaptic \
 		gnome-text-editor \
 		uget \
-  		gufw \
 		gitg
 
 	# disable apt ads
@@ -167,18 +165,16 @@ then
 		wget \
 		git \
 		micro \
+  		tree \
 		mc \
-		htop \
-		tree \
-  		file-roller \
-		screenfetch
+		htop
 
 	# softwares
 	sudo dnf install -y \
+ 		file-roller \
 		gparted gpart \
 		dconf-editor \
 		uget \
-  		gufw \
 		gitg
 	
 	# build tools
@@ -326,6 +322,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # homebrew dev softwares
 brew install \
+	neofetch \
 	git git-flow-avh gh \
 	python3 pipenv poetry \
 	go
