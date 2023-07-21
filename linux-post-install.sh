@@ -81,6 +81,7 @@ then
 
 	# softwares
 	sudo apt install -y \
+ 		gufw \
 		hardinfo \
 		gparted gpart \
 		dconf-editor \
