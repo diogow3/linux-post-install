@@ -120,7 +120,8 @@ then
 	sudo apt update; sudo apt install -y code
 
 	# Optional:
-	# After rebooting, open extensions manager and install Dash to Panel
+	# After rebooting, open extensions manager and install
+ 	# Dash to Panel, Wireless hid
 	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
 
 fi # end Ubuntu
@@ -181,6 +182,12 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 
+	# extensions
+ 	sudo dnf install -y \
+ 	gnome-shell-extension-dash-to-panel \
+  	gnome-shell-extension-appindicator \
+   	gnome-shell-extension-blur-my-shell
+ 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
@@ -201,7 +208,8 @@ then
 	sudo dnf install -y code
 
 	# After rebooting, open extensions manager and install
-	# Dash to Panel, AppIndicator, Desktop Icons, Wireless hid
+	# Desktop Icons NG (DING), Wireless hid
+ 	# Enable AppIndicator, Dash to Panel
 	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
 
 fi # end Fedora
