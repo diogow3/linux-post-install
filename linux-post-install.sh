@@ -86,7 +86,6 @@ then
 		gparted gpart \
 		dconf-editor \
 		synaptic \
-		gnome-text-editor \
 		uget \
 		gitg
 
@@ -153,6 +152,7 @@ then
 	
 	# remove softwares
 	sudo dnf remove -y \
+ 		gnome-text-editor \
 		libreoffice*
 	
 	# update
@@ -374,6 +374,7 @@ poetry config virtualenvs.in-project true
 flatpak update -y
 flatpak install -y \
 	flathub com.google.Chrome \
+ 	flathub org.gnome.TextEditor \
 	flathub org.libreoffice.LibreOffice \
 	flathub org.gimp.GIMP \
 	flathub org.videolan.VLC \
