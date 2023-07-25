@@ -272,8 +272,8 @@ gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.privacy remember-recent-files false
 
 # text editor
-gsettings set org.gnome.TextEditor restore-session false
-gsettings set org.gnome.TextEditor wrap-text false
+#gsettings set org.gnome.TextEditor restore-session false
+#gsettings set org.gnome.TextEditor wrap-text false
 
 # terminal color white on black
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-columns 120
@@ -385,6 +385,7 @@ flatpak install -y \
 	flathub com.spotify.Client \
 	flathub org.qbittorrent.qBittorrent \
 	flathub org.nickvision.tubeconverter \
+ 	flathub fr.handbrake.ghb \
 	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
