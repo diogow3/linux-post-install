@@ -35,7 +35,7 @@ then
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
 
 	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
+	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
 
