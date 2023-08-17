@@ -118,11 +118,6 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-	# Optional:
-	# After rebooting, open extensions manager and install
- 	# Dash to Panel, Wireless hid
-	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
-
 fi # end Ubuntu
 
 
@@ -184,9 +179,8 @@ then
 
 	# extensions
  	sudo dnf install -y \
- 	gnome-shell-extension-dash-to-panel \
-  	gnome-shell-extension-appindicator \
-   	gnome-shell-extension-blur-my-shell
+ 	gnome-shell-extension-dash-to-dock \
+  	gnome-shell-extension-appindicator
  
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
@@ -207,10 +201,9 @@ then
 	dnf check-update
 	sudo dnf install -y code
 
-	# After rebooting, open extensions manager and install
-	# Desktop Icons NG (DING), Wireless hid
- 	# Enable AppIndicator, Dash to Panel
-	# Open Dash to Panel settings, import dashtopanel_settings from the repository folder 'settings'
+	# After rebooting, open extensions manager
+	# install: Desktop Icons NG (DING), Wireless hid
+ 	# enable: AppIndicator, Dash to Dock
 
 fi # end Fedora
 
