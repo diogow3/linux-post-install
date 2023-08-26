@@ -211,6 +211,9 @@ fi # end Fedora
 # -----------------------------------------------------------------------------------
 # Ubuntu & Fedora
 
+# set clock to local time to use dual boot with windows
+timedatectl set-local-rtc 1 --adjust-system-clock
+
 # create categories folders, auto-sort applications at each login
 gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
 
@@ -257,12 +260,15 @@ gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folder
 gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
 gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
 
+# remove keybinding conflict
+gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
+
 # desktop adjustments
 gsettings set org.gnome.mutter center-new-windows true
 gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
-gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
 
+# user preferences
 gsettings set org.gnome.desktop.privacy remember-recent-files false
 
 # text editor
@@ -277,16 +283,13 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ background-color 'rgb(0,0,0)'
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
-# set clock to local time to use dual boot with windows
-timedatectl set-local-rtc 1 --adjust-system-clock
-
 # wallpaper
 declare imgfolder="$(xdg-user-dir PICTURES)"
 curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
 gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
 gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
 
-# create user directories
+# create user folders
 mkdir -p ~/temp
 mkdir -p ~/programas
 mkdir -p ~/dev
