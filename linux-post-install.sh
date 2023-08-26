@@ -261,6 +261,7 @@ gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folder
 gsettings set org.gnome.mutter center-new-windows true
 gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
+gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
 
 gsettings set org.gnome.desktop.privacy remember-recent-files false
 
