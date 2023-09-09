@@ -54,8 +54,8 @@ alias docker-stop='docker stop $(docker container list -q)'
 
 # remove all containers, images and networks
 alias docker-prune='
-    docker container prune -f &&
     docker rmi -f $(docker image list -aq) &&
+    docker container prune -f &&
     docker network prune -f'
 
 ## android aliases
