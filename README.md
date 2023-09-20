@@ -1,3 +1,5 @@
+# Archived for the time being. Refer to mint-post-install for an up-to-date project.
+
 # linux-post-install
 Post install shell script for Ubuntu and Fedora
 
