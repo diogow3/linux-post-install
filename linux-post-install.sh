@@ -8,19 +8,21 @@ OS="$(. /etc/os-release && echo $ID)"
 
 if [[ "${OS}" == "ubuntu" ]]
 then
-  OS_UBUNTU=1
+	OS_UBUNTU=1
+elif [[ "${OS}" == "linuxmint" ]]
+then
+	OS_LINUXMINT=1
 elif [[ "${OS}" == "fedora" ]]
 then
-  OS_FEDORA=1
+	OS_FEDORA=1
 else
-  abort "OS not supported"
+	abort "OS not supported"
 fi
 
 echo ${OS}
 
 
-# -----------------------------------------------------------------------------------
-# Ubuntu
+# Ubuntu -----------------------------------------------------------------------------------
 if [[ -n "${OS_UBUNTU-}" ]]
 then
 
@@ -69,10 +71,7 @@ then
 		wget \
 		git \
 		nano \
-		micro \
   		tree \
-		mc \
-		htop \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
 		python3 python3-smbc smbclient \
@@ -118,11 +117,99 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-fi # end Ubuntu
+fi # end Ubuntu -----------------------------------------------------------------------------------
 
 
-# -----------------------------------------------------------------------------------
-# Fedora
+
+# LinuxMint -----------------------------------------------------------------------------------
+if [[ -n "${OS_LINUXMINT-}" ]]
+then
+	
+	sudo apt update
+
+	# .bash_aliases
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
+
+	# desktop adjustments
+	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
+	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
+	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
+	gsettings set org.cinnamon enabled-applets "['panel1:center:0:menu@cinnamon.org:0', 'panel1:left:0:separator@cinnamon.org:1', 'panel1:center:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:6:keyboard@cinnamon.org:8', 'panel1:right:7:favorites@cinnamon.org:9', 'panel1:right:8:network@cinnamon.org:10', 'panel1:right:9:sound@cinnamon.org:11', 'panel1:right:10:power@cinnamon.org:12', 'panel1:right:11:calendar@cinnamon.org:13', 'panel1:right:12:cornerbar@cinnamon.org:14', 'panel1:left:1:scale@cinnamon.org:15']"
+
+	# super+tab = overview
+	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
+
+	# user preferences
+	gsettings set org.cinnamon.desktop.privacy remember-recent-files false
+
+	# wallpaper
+	declare imgfolder="$(xdg-user-dir PICTURES)"
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
+	gsettings set org.cinnamon.desktop.background picture-uri "file://${imgfolder}/gray.png"
+
+	# remove softwares
+	sudo apt purge -y \
+		libreoffice* \
+		xed
+
+	# update
+	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
+
+	# essential
+	sudo apt install -y \
+		firefox-locale-pt \
+		build-essential \
+		curl \
+		wget \
+		git \
+		nano \
+		tree \
+		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
+		dkms linux-headers-generic \
+		python3 python3-smbc smbclient \
+		exfat-fuse hfsprogs 
+
+	# softwares
+	sudo apt install -y \
+		cheese \
+		menulibre \
+		hardinfo \
+		gparted gpart \
+		dconf-editor \
+		synaptic \
+		uget \
+		gitg
+
+	# restricted extras
+	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+	sudo apt install -y ubuntu-restricted-extras
+
+	# virtualization
+	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
+	sudo apt install -y virt-manager
+
+	# docker
+	sudo apt install -y ca-certificates curl gnupg
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+	echo \
+		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+		"$(. /etc/os-release && echo "$UBUNTU_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+
+	# vs code
+	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
+	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+	rm -f packages.microsoft.gpg
+	sudo apt update; sudo apt install -y code
+
+fi # end LinuxMint -----------------------------------------------------------------------------------
+
+
+
+# Fedora -----------------------------------------------------------------------------------
 if [[ -n "${OS_FEDORA-}" ]]
 then
 
@@ -205,75 +292,89 @@ then
 	# install: Desktop Icons NG (DING), Wireless hid
  	# enable: AppIndicator, Dash to Dock
 
-fi # end Fedora
+fi # end Fedora -----------------------------------------------------------------------------------
 
 
-# -----------------------------------------------------------------------------------
-# Ubuntu & Fedora
+
+# Ubuntu, Fedora -----------------------------------------------------------------------------------
+
+if [[ -n "${OS_UBUNTU-}" || "${OS_FEDORA-}" ]]
+then
+
+	# create categories folders, auto-sort applications at each login
+	gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
+
+	if [[ "${LANG}" == "pt_BR.UTF-8" ]]
+	then
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
+	else
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
+		gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
+	fi
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ name "AudioVideo.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ categories "['AudioVideo', 'Audio', 'Video']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ name "Development.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ categories "['Development']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ name "Game.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ categories "['Game']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ name "Graphics.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ categories "['Graphics']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ name "Network.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ categories "['Network']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name "Office.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ name "Utility.directory"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ categories "['Utility']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
+
+	# remove keybinding conflict
+	gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
+
+	# desktop adjustments
+	gsettings set org.gnome.mutter center-new-windows true
+	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
+	gsettings set org.gnome.desktop.interface clock-show-weekday true
+
+	# user preferences
+	gsettings set org.gnome.desktop.privacy remember-recent-files false
+
+	# add 'new empty file' in the context menu
+	touch ~/Modelos/Arquivo\ Vazio
+
+	# wallpaper
+	declare imgfolder="$(xdg-user-dir PICTURES)"
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
+	gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
+	gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
+
+fi # end Ubuntu, Fedora -----------------------------------------------------------------------------------
+
+
+
+# Ubuntu, LinuxMint and Fedora -----------------------------------------------------------------------------------
 
 # set clock to local time to use dual boot with windows
 timedatectl set-local-rtc 1 --adjust-system-clock
-
-# create categories folders, auto-sort applications at each login
-gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
-
-if [[ "${LANG}" == "pt_BR.UTF-8" ]]
-then
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Ciência"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "Sistema"
-else
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ name "Science.directory"
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name "System.directory"
-fi
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ name "AudioVideo.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ categories "['AudioVideo', 'Audio', 'Video']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/AudioVideo/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ name "Development.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ categories "['Development']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Development/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ name "Game.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ categories "['Game']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Game/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ name "Graphics.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ categories "['Graphics']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Graphics/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ name "Network.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ categories "['Network']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Network/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name "Office.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ name "Utility.directory"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ categories "['Utility']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utility/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ categories "['Science', 'Education']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Science/ translate true
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
-
-# remove keybinding conflict
-gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
-
-# desktop adjustments
-gsettings set org.gnome.mutter center-new-windows true
-gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
-gsettings set org.gnome.desktop.interface clock-show-weekday true
-
-# user preferences
-gsettings set org.gnome.desktop.privacy remember-recent-files false
-
-# text editor
-#gsettings set org.gnome.TextEditor restore-session false
-#gsettings set org.gnome.TextEditor wrap-text false
 
 # terminal color white on black
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-columns 120
@@ -283,19 +384,13 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ background-color 'rgb(0,0,0)'
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
-# wallpaper
-declare imgfolder="$(xdg-user-dir PICTURES)"
-curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
-gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
-gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
+# git default branch
+git config --global init.defaultBranch main
 
 # create user folders
 mkdir -p ~/temp
 mkdir -p ~/programas
 mkdir -p ~/dev
-
-# add 'new empty file' in the context menu
-touch ~/Modelos/Arquivo\ Vazio
 
 # install dev fonts
 wget -c https://fonts.google.com/download?family=JetBrains%20Mono -O ~/temp/JetBrains_Mono.zip
@@ -326,23 +421,19 @@ chmod +x ~/.dotnet/dotnet-install.sh
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# homebrew dev softwares
-brew install \
-	neofetch \
-	git git-flow-avh gh \
-	python3 pipenv poetry \
-	go
-
-# Ubuntu PATH
-if [[ -n "${OS_UBUNTU-}" ]]
+# Ubuntu, LinuxMint PATH
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
 	# homebrew path
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.profile
+	echo '' >> ~/.profile
+	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.profile
 	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
 	# dotnet path
+	echo '' >> ~/.profile
 	echo '# dotnet path' >> ~/.profile
 	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.profile
 	# pipenv .venv in project folder
+	echo '' >> ~/.profile
 	echo '# pipenv .venv in project folder' >> ~/.profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.profile
 fi
@@ -351,18 +442,25 @@ fi
 if [[ -n "${OS_FEDORA-}" ]]
 then
 	# homebrew path
-	(echo; echo '# Set PATH, MANPATH, etc., for Homebrew.') >> ~/.bash_profile
+	echo '' >> ~/.bash_profile
+	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.bash_profile
 	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
 	# dotnet path
+	echo '' >> ~/.bash_profile
 	echo '# dotnet path' >> ~/.bash_profile
 	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bash_profile
 	# pipenv .venv in project folder
+	echo '' >> ~/.bash_profile
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
 	echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.bash_profile
 fi
 
-# git default branch
-git config --global init.defaultBranch main
+# homebrew dev softwares
+brew install \
+	neofetch \
+	git git-flow-avh gh \
+	python3 pipenv poetry \
+	go
 
 # poetry .venv in project folder
 poetry config virtualenvs.in-project true
@@ -371,10 +469,10 @@ poetry config virtualenvs.in-project true
 flatpak update -y
 flatpak install -y \
 	flathub com.google.Chrome \
- 	flathub org.gnome.TextEditor \
 	flathub org.libreoffice.LibreOffice \
 	flathub org.gimp.GIMP \
 	flathub org.videolan.VLC \
+	flathub org.gnome.TextEditor \
 	flathub com.mattjakeman.ExtensionManager
 
 # flatpak softwares
@@ -394,5 +492,5 @@ flatpak install -y \
 
 # reboot
 echo -e "\n Reboot Now \n"
-sudo reboot
+#sudo reboot
 # end
