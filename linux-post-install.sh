@@ -134,9 +134,18 @@ then
 	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
 	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
 	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
+	
+	gsettings set org.nemo.desktop volumes-visible false
 
-	# super+tab = overview
+	# fractional scaling
+	gsettings set org.cinnamon.muffin experimental-features "['x11-randr-fractional-scaling']"
+
+	# keybindings
+	# super+tab = workspace overview
 	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
+	# super+l = lock screen
+	gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "['<Super>l', 'XF86ScreenSaver']"
+	gsettings set org.cinnamon.desktop.keybindings looking-glass-keybinding "['<Super><Alt>l']"
 
 	# user preferences
 	gsettings set org.cinnamon.desktop.privacy remember-recent-files false
