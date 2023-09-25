@@ -117,7 +117,7 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-fi # end Ubuntu -----------------------------------------------------------------------------------
+fi # end Ubuntu
 
 
 
@@ -134,7 +134,6 @@ then
 	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
 	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
 	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
-	gsettings set org.cinnamon enabled-applets "['panel1:center:0:menu@cinnamon.org:0', 'panel1:left:0:separator@cinnamon.org:1', 'panel1:center:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:6:keyboard@cinnamon.org:8', 'panel1:right:7:favorites@cinnamon.org:9', 'panel1:right:8:network@cinnamon.org:10', 'panel1:right:9:sound@cinnamon.org:11', 'panel1:right:10:power@cinnamon.org:12', 'panel1:right:11:calendar@cinnamon.org:13', 'panel1:right:12:cornerbar@cinnamon.org:14', 'panel1:left:1:scale@cinnamon.org:15']"
 
 	# super+tab = overview
 	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
@@ -205,7 +204,7 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
-fi # end LinuxMint -----------------------------------------------------------------------------------
+fi # end LinuxMint
 
 
 
@@ -292,7 +291,7 @@ then
 	# install: Desktop Icons NG (DING), Wireless hid
  	# enable: AppIndicator, Dash to Dock
 
-fi # end Fedora -----------------------------------------------------------------------------------
+fi # end Fedora
 
 
 
@@ -367,7 +366,7 @@ then
 	gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
 	gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
 
-fi # end Ubuntu, Fedora -----------------------------------------------------------------------------------
+fi # end Ubuntu, Fedora
 
 
 
