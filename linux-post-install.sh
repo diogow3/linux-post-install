@@ -58,8 +58,23 @@ then
 	# remove softwares
 	sudo apt purge -y \
 		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
+		transmission \
+		totem \
+		usb-creator-gtk \
 		libreoffice* \
+		gnome-text-editor \
 		gedit
+	
+	# install if not already installed
+	sudo apt install -y \
+		gnome-calendar \
+		deja-dup \
+		file-roller \
+		cheese \
+		simple-scan \
+		shotwell \
+		thunderbird \
+		remmina
 	
 	# update
 	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
@@ -97,8 +112,7 @@ then
 	sudo apt install -y ubuntu-restricted-extras
 
 	# virtualization
-	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
-	sudo apt install -y virt-manager
+	sudo apt install -y qemu-system virt-manager bridge-utils
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
@@ -193,8 +207,7 @@ then
 	sudo apt install -y ubuntu-restricted-extras
 
 	# virtualization
-	sudo apt install -y qemu qemu-system-x86 libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools
-	sudo apt install -y virt-manager
+	sudo apt install -y qemu-system virt-manager bridge-utils
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
