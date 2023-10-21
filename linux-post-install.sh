@@ -33,8 +33,9 @@ then
 
 	# desktop adjustments
 	gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
-	gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+	gsettings set org.gnome.shell.extensions.dash-to-dock always-center-icons true
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge false
 
 	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
 	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
