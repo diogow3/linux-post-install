@@ -1,6 +1,13 @@
 ## LinuxMint bash aliases
 ## save in ~/.bash_aliases
 
+# update dev packages
+alias upd-dev='
+    brew upgrade;
+    sdk upgrade;
+    nvm install --lts;
+    dotnet-install.sh -c lts'
+
 # update all
 alias upd='
     sudo apt update;
@@ -8,13 +15,7 @@ alias upd='
     sudo apt autoremove -y;
     sudo apt autoclean;
     flatpak update -y;
-    brew upgrade'
-
-# update other dev packages
-alias upd-dev='
-    sdk upgrade;
-    nvm install --lts;
-    ~/.dotnet/dotnet-install.sh -c lts'
+    upd-dev'
 
 # nav
 alias ..='cd ..'

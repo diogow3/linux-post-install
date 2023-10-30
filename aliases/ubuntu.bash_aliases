@@ -3,6 +3,7 @@
 
 # update other dev packages
 alias upd-dev='
+    brew upgrade;
     sdk upgrade;
     nvm install --lts;
     dotnet-install.sh -c lts'
@@ -15,7 +16,6 @@ alias upd='
     sudo apt autoclean;
     sudo snap refresh;
     flatpak update -y;
-    brew upgrade;
     upd-dev'
 
 # reinstall gnome-software
