@@ -428,6 +428,7 @@ rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java
+sdk install maven
 
 # nodejs lts - via nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
@@ -483,7 +484,9 @@ brew install \
 	neofetch \
 	git git-flow-avh gh \
 	python3 pipenv poetry \
-	go
+	go \
+	watchman \
+	kind
 
 # poetry .venv in project folder
 poetry config virtualenvs.in-project true

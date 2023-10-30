@@ -69,18 +69,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# update other dev packages
+alias upd-dev='
+    sdk upgrade;
+    nvm install --lts;
+    dotnet-install.sh -c lts'
+
 # update all
 alias upd='
     sudo dnf update -y;
     sudo dnf autoremove -y;
     flatpak update -y;
-    brew upgrade'
-
-# update other dev packages
-alias upd-dev='
-    sdk upgrade;
-    nvm install --lts;
-    ~/.dotnet/dotnet-install.sh -c lts'
+    brew upgrade;
+    upd-dev'
 
 # nav
 alias ..='cd ..'

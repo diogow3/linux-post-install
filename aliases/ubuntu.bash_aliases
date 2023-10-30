@@ -1,6 +1,12 @@
 ## Ubuntu bash aliases
 ## save in ~/.bash_aliases
 
+# update other dev packages
+alias upd-dev='
+    sdk upgrade;
+    nvm install --lts;
+    dotnet-install.sh -c lts'
+
 # update all
 alias upd='
     sudo apt update;
@@ -9,13 +15,8 @@ alias upd='
     sudo apt autoclean;
     sudo snap refresh;
     flatpak update -y;
-    brew upgrade'
-
-# update other dev packages
-alias upd-dev='
-    sdk upgrade;
-    nvm install --lts;
-    ~/.dotnet/dotnet-install.sh -c lts'
+    brew upgrade;
+    upd-dev'
 
 # reinstall gnome-software
 alias upd-app-store='
