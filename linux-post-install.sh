@@ -133,6 +133,13 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
+	# dotnet lts
+	declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+	wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	sudo dpkg -i packages-microsoft-prod.deb
+	rm packages-microsoft-prod.deb
+	sudo apt update; sudo apt install -y dotnet-sdk-8.0
+
 fi # end Ubuntu
 
 
@@ -228,6 +235,13 @@ then
 	rm -f packages.microsoft.gpg
 	sudo apt update; sudo apt install -y code
 
+	# dotnet lts
+	declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+	wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	sudo dpkg -i packages-microsoft-prod.deb
+	rm packages-microsoft-prod.deb
+	sudo apt update; sudo apt install -y dotnet-sdk-8.0
+
 fi # end LinuxMint
 
 
@@ -310,6 +324,9 @@ then
 	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 	dnf check-update
 	sudo dnf install -y code
+
+	# dotnet lts
+	sudo dnf install -y dotnet-sdk-8.0
 
 	# After rebooting, open extensions manager
 	# install: Desktop Icons NG (DING), Wireless hid
@@ -424,7 +441,7 @@ mv ~/temp/jetbrains_mono/JetBrainsMono-Italic-VariableFont_wght.ttf ~/.local/sha
 fc-cache -f -v
 rm -rf ~/temp/JetBrains_Mono.zip ~/temp/jetbrains_mono
 
-# java jdk lts - via sdkman
+# java lts - via sdkman
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java
@@ -435,12 +452,6 @@ sdk install gradle
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
-
-# dotnet lts - via microsoft script
-mkdir -p ~/.dotnet
-curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/.dotnet/dotnet-install.sh
-chmod +x ~/.dotnet/dotnet-install.sh
-~/.dotnet/dotnet-install.sh -c LTS
 
 # homebrew
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

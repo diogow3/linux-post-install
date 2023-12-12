@@ -73,8 +73,7 @@ fi
 alias upd-dev='
     brew upgrade;
     sdk upgrade;
-    nvm install --lts;
-    dotnet-install.sh -c lts'
+    nvm install --lts'
 
 # update all
 alias upd='
