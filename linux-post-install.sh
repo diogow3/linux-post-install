@@ -464,10 +464,6 @@ then
 	echo '' >> ~/.profile
 	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.profile
 	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-	# dotnet path
-	echo '' >> ~/.profile
-	echo '# dotnet path' >> ~/.profile
-	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.profile
 	# pipenv .venv in project folder
 	echo '' >> ~/.profile
 	echo '# pipenv .venv in project folder' >> ~/.profile
@@ -481,10 +477,6 @@ then
 	echo '' >> ~/.bash_profile
 	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.bash_profile
 	echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
-	# dotnet path
-	echo '' >> ~/.bash_profile
-	echo '# dotnet path' >> ~/.bash_profile
-	echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bash_profile
 	# pipenv .venv in project folder
 	echo '' >> ~/.bash_profile
 	echo '# pipenv .venv in project folder' >> ~/.bash_profile
