@@ -109,37 +109,6 @@ then
 	sudo pro config set apt_news=false
 	sudo systemctl disable ubuntu-advantage
 
-	# restricted extras
-	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-	sudo apt install -y ubuntu-restricted-extras
-
-	# virtualization
-	sudo apt install -y qemu-system virt-manager bridge-utils
-
-	# docker
-	sudo apt install -y ca-certificates curl gnupg
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-	echo \
-		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-		jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-	sudo groupadd docker
-	sudo usermod -aG docker $USER
-
-	# vs code
-	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
-	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-	rm -f packages.microsoft.gpg
-	sudo apt update; sudo apt install -y code
-
-	# dotnet lts
-	declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
-	wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-	sudo dpkg -i packages-microsoft-prod.deb
-	rm packages-microsoft-prod.deb
-	sudo apt update; sudo apt install -y dotnet-sdk-8.0
-
 fi # end Ubuntu
 
 
@@ -211,6 +180,20 @@ then
 		uget \
 		gitg
 
+fi # end LinuxMint
+
+
+
+# Ubuntu, Linux Mint -------------------------------------------------------------------------------
+
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
+then
+	#declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
+	#declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+
+	declare ubuntu_name="jammy"
+	declare ubuntu_number="22.04"
+
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 	sudo apt install -y ubuntu-restricted-extras
@@ -223,7 +206,7 @@ then
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-		"$(. /etc/os-release && echo "$UBUNTU_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		$ubuntu_name stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
@@ -236,13 +219,12 @@ then
 	sudo apt update; sudo apt install -y code
 
 	# dotnet lts
-	declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
-	wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 	sudo dpkg -i packages-microsoft-prod.deb
 	rm packages-microsoft-prod.deb
 	sudo apt update; sudo apt install -y dotnet-sdk-8.0
 
-fi # end LinuxMint
+fi # end Ubuntu, Linux Mint
 
 
 
@@ -449,7 +431,7 @@ sdk install maven
 sdk install gradle
 
 # nodejs lts - via nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
@@ -523,4 +505,5 @@ flatpak install -y \
 # reboot
 echo -e "\n Reboot Now \n"
 #sudo reboot
+
 # end
