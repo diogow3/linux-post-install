@@ -5,7 +5,8 @@
 alias upd-dev='
     brew upgrade;
     sdk upgrade;
-    nvm install --lts'
+    nvm install --lts;
+    pipx upgrade-all'
 
 # update all
 alias upd='

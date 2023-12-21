@@ -469,13 +469,20 @@ fi
 brew install \
 	neofetch \
 	git git-flow-avh gh \
-	python3 pipenv poetry \
+	python3 pipx \
 	go \
 	watchman \
 	kind
 
+# pipx path
+pipx ensurepath
+
+# python softwares
+pipx install pipenv
+pipx install poetry
+
 # poetry .venv in project folder
-poetry config virtualenvs.in-project true
+$HOME/.local/bin/poetry config virtualenvs.in-project true
 
 # flatpak essential
 flatpak update -y
