@@ -505,7 +505,7 @@ flatpak install -y \
 
 # flatpak dev softwares
 flatpak install -y \
-	flathub com.getpostman.Postman \
+ 	flathub rest.insomnia.Insomnia \
 	flathub io.dbeaver.DBeaverCommunity \
 	flathub io.github.shiftey.Desktop
 
