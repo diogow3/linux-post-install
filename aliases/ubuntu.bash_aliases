@@ -59,6 +59,9 @@ alias docker-prune='
     docker container prune -f &&
     docker network prune -f'
 
+# remove all volumes, unused and used
+alias docker-prune-volume='docker volume rm -f $(docker volume list -q)'
+
 ## android aliases
 # android path
 #export ANDROID_HOME=~/Android/Sdk
