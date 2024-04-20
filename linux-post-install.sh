@@ -191,8 +191,8 @@ then
 	#declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
 	#declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
 
-	declare ubuntu_name="jammy"
-	declare ubuntu_number="22.04"
+	#declare ubuntu_name="noble"
+	declare ubuntu_number="24.04"
 
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
@@ -206,7 +206,7 @@ then
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-		$ubuntu_name stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		$(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
