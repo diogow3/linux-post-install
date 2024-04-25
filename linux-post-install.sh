@@ -38,7 +38,7 @@ then
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge false
 
 	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
+	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
 	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
 
@@ -369,7 +369,7 @@ then
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
 
-	# remove keybinding conflict
+	# remove keybinding conflict on vscode
 	gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
 
 	# desktop adjustments
@@ -505,9 +505,9 @@ flatpak install -y \
 
 # flatpak dev softwares
 flatpak install -y \
- 	flathub rest.insomnia.Insomnia \
-	flathub io.dbeaver.DBeaverCommunity \
-	flathub io.github.shiftey.Desktop
+	flathub io.github.shiftey.Desktop \
+	flathub io.httpie.Httpie \
+	flathub io.dbeaver.DBeaverCommunity
 
 # reboot
 echo -e "\n Reboot Now \n"
