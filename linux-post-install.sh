@@ -71,10 +71,8 @@ then
 		gnome-calendar \
 		deja-dup \
 		file-roller \
-		cheese \
 		simple-scan \
 		shotwell \
-		thunderbird \
 		remmina
 	
 	# update
@@ -93,7 +91,8 @@ then
 		python3 python3-smbc smbclient \
 		exfat-fuse hfsprogs \
 		libfuse2 \
-		gnome-tweaks 
+		gnome-tweaks \
+		gdebi 
 
 	# softwares
 	sudo apt install -y \
@@ -167,7 +166,8 @@ then
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
 		python3 python3-smbc smbclient \
-		exfat-fuse hfsprogs 
+		exfat-fuse hfsprogs \
+		gdebi 
 
 	# softwares
 	sudo apt install -y \
@@ -270,7 +270,8 @@ then
 		micro \
   		tree \
 		mc \
-		htop
+		htop \
+		gdebi 
 
 	# softwares
 	sudo dnf install -y \
