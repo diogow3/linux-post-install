@@ -22,6 +22,25 @@ fi
 echo ${OS}
 
 
+# check Desktop Environment
+DE="$XDG_CURRENT_DESKTOP"
+
+if [[ "${DE}" == "GNOME" || "${DE}" == "ubuntu:GNOME" ]]
+then
+	DE_GNOME=1
+elif [[ "${DE}" == "KDE" ]]
+then
+	DE_KDE=1
+elif [[ "${DE}" == "X:Cinnamon" ]]
+then
+	DE_CINNAMON=1
+else
+	abort "Desktop Environment not supported"
+fi
+
+echo $DE
+
+
 # Ubuntu -----------------------------------------------------------------------------------
 if [[ -n "${OS_UBUNTU-}" ]]
 then
