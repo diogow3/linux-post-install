@@ -25,7 +25,7 @@ echo ${OS}
 # check Desktop Environment
 DE="$XDG_CURRENT_DESKTOP"
 
-if [[ "${DE}" == "GNOME" || "${DE}" == "ubuntu:GNOME" ]]
+if [[ "${DE}" == "GNOME" || "${DE}" == "ubuntu:GNOME" || ]]
 then
 	DE_GNOME=1
 elif [[ "${DE}" == "KDE" ]]
@@ -41,7 +41,7 @@ fi
 echo $DE
 
 
-# Ubuntu -----------------------------------------------------------------------------------
+# Ubuntu ----------
 if [[ -n "${OS_UBUNTU-}" ]]
 then
 
@@ -50,49 +50,13 @@ then
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
 
-	# desktop adjustments
-	gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
-	gsettings set org.gnome.shell.extensions.dash-to-dock always-center-icons true
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge false
-
-	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
-	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
-
-	gsettings set org.gnome.shell.extensions.ding show-home false
-	gsettings set org.gnome.shell.extensions.ding keep-arranged true
-	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
-	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
-
 	# flatpak and flathub https://flathub.org/apps
 	sudo apt install -y flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-	# gnome store
-	sudo snap remove snap-store
-	sudo apt install -y gnome-software-plugin-flatpak
-	sudo apt purge -y gnome-software-plugin-snap
-
 	# remove softwares
 	sudo apt purge -y \
-		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
-		transmission \
-		totem \
-		usb-creator-gtk \
-		libreoffice* \
-		gnome-text-editor \
-		gedit
-	
-	# install if not already installed
-	sudo apt install -y \
-		gnome-calendar \
-		deja-dup \
-		file-roller \
-		simple-scan \
-		shotwell \
-		remmina
+		libreoffice*
 	
 	# update
 	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
@@ -104,21 +68,17 @@ then
 		wget \
 		git \
 		nano \
+		micro \
   		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
 		python3 python3-smbc smbclient \
 		exfat-fuse hfsprogs \
-		libfuse2 \
-		gnome-tweaks \
-		gdebi 
+		libfuse2
 
 	# softwares
 	sudo apt install -y \
- 		gufw \
 		hardinfo \
-		gparted gpart \
-		dconf-editor \
 		synaptic \
 		uget \
 		gitg
@@ -127,11 +87,11 @@ then
 	sudo pro config set apt_news=false
 	sudo systemctl disable ubuntu-advantage
 
-fi # end Ubuntu
+fi # end Ubuntu ----------
 
 
 
-# LinuxMint -----------------------------------------------------------------------------------
+# LinuxMint ----------
 if [[ -n "${OS_LINUXMINT-}" ]]
 then
 	
@@ -139,31 +99,6 @@ then
 
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
-
-	# desktop adjustments
-	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
-	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
-	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
-	
-	gsettings set org.nemo.desktop volumes-visible false
-
-	# fractional scaling
-	gsettings set org.cinnamon.muffin experimental-features "['x11-randr-fractional-scaling']"
-
-	# keybindings
-	# super+tab = workspace overview
-	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
-	# super+l = lock screen
-	gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "['<Super>l', 'XF86ScreenSaver']"
-	gsettings set org.cinnamon.desktop.keybindings looking-glass-keybinding "['<Super><Alt>l']"
-
-	# user preferences
-	gsettings set org.cinnamon.desktop.privacy remember-recent-files false
-
-	# wallpaper
-	declare imgfolder="$(xdg-user-dir PICTURES)"
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
-	gsettings set org.cinnamon.desktop.background picture-uri "file://${imgfolder}/gray.png"
 
 	# remove softwares
 	sudo apt purge -y \
@@ -181,6 +116,7 @@ then
 		wget \
 		git \
 		nano \
+		micro \
 		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
 		dkms linux-headers-generic \
@@ -199,19 +135,19 @@ then
 		uget \
 		gitg
 
-fi # end LinuxMint
+fi # end LinuxMint ----------
 
 
 
-# Ubuntu, Linux Mint -------------------------------------------------------------------------------
+# Ubuntu, Linux Mint ----------
 
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
-	#declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
-	#declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+	declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
+	declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
 
 	#declare ubuntu_name="noble"
-	declare ubuntu_number="24.04"
+	#declare ubuntu_number="24.04"
 
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
@@ -225,7 +161,7 @@ then
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-		$(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		$ubuntu_name stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	sudo apt update; sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
@@ -243,11 +179,11 @@ then
 	rm packages-microsoft-prod.deb
 	sudo apt update; sudo apt install -y dotnet-sdk-8.0
 
-fi # end Ubuntu, Linux Mint
+fi # end Ubuntu, Linux Mint ----------
 
 
 
-# Fedora -----------------------------------------------------------------------------------
+# Fedora ----------
 if [[ -n "${OS_FEDORA-}" ]]
 then
 
@@ -257,22 +193,8 @@ then
 	mkdir -p ~/.bashrc.d
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
 
-	# desktop adjustments
-	gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
-	gsettings set org.gnome.desktop.interface enable-hot-corners false
-
-	# tab nav
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
-	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
-	gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
-	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
-
-	# enable fractional scaling
-	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-	
 	# remove softwares
 	sudo dnf remove -y \
- 		gnome-text-editor \
 		libreoffice*
 	
 	# update
@@ -280,7 +202,6 @@ then
 
 	# essential
 	sudo dnf install -y \
-		gnome-tweaks \
 		dkms kernel-devel \
 		python3 python3-smbc \
 		curl \
@@ -289,25 +210,16 @@ then
 		micro \
   		tree \
 		mc \
-		htop \
-		gdebi 
+		htop
 
 	# softwares
 	sudo dnf install -y \
- 		file-roller \
-		gparted gpart \
-		dconf-editor \
 		uget \
 		gitg
 	
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 
-	# extensions
- 	sudo dnf install -y \
- 	gnome-shell-extension-dash-to-dock \
-  	gnome-shell-extension-appindicator
- 
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
@@ -330,18 +242,127 @@ then
 	# dotnet lts
 	sudo dnf install -y dotnet-sdk-8.0
 
+	# Optional:
 	# After rebooting, open extensions manager
 	# install: Desktop Icons NG (DING), Wireless hid
- 	# enable: AppIndicator, Dash to Dock
 
-fi # end Fedora
-
+fi # end Fedora ----------
 
 
-# Ubuntu, Fedora -----------------------------------------------------------------------------------
 
-if [[ -n "${OS_UBUNTU-}" || "${OS_FEDORA-}" ]]
+# Ubuntu + Gnome ----------
+if [[ -n "${OS_UBUNTU}" && "${DE_GNOME}" ]]
+
+	# remove softwares
+	sudo apt purge -y \
+		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
+		transmission \
+		totem \
+		usb-creator-gtk \
+		gnome-text-editor \
+		gedit
+	
+	# install if not already installed
+	sudo apt install -y \
+		gnome-calendar \
+		deja-dup \
+		file-roller \
+		simple-scan \
+		shotwell \
+		remmina
+
+	# essential
+	sudo apt install -y \
+		gnome-tweaks \
+		gdebi 
+
+	# softwares
+	sudo apt install -y \
+ 		gufw \
+		gparted gpart \
+		dconf-editor
+	
+	gsettings set org.gnome.shell.extensions.ding show-home false
+	gsettings set org.gnome.shell.extensions.ding keep-arranged true
+	gsettings set org.gnome.shell.extensions.ding arrangeorder 'KIND'
+	gsettings set org.gnome.shell.extensions.ding start-corner 'top-right'
+
+	# gnome store
+	sudo snap remove snap-store
+	sudo apt install -y gnome-software-plugin-flatpak
+	sudo apt purge -y gnome-software-plugin-snap
+
+fi # end Ubuntu + Gnome ----------
+
+
+
+# Fedora + Gnome ----------
+if [[ -n "${OS_FEDORA}" && "${DE_GNOME}" ]]
+
+	# remove softwares
+	sudo dnf remove -y \
+ 		gnome-text-editor
+	
+	# essential
+	sudo dnf install -y \
+		gnome-tweaks \
+		gdebi 
+
+	# softwares
+	sudo dnf install -y \
+ 		file-roller \
+		gparted gpart \
+		dconf-editor
+
+	# extensions
+ 	sudo dnf install -y \
+ 	gnome-shell-extension-dash-to-dock \
+  	gnome-shell-extension-appindicator
+
+	gnome-extensions enable dash-to-dock@micxgx.gmail.com
+	gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+	gnome-extensions disable background-logo@fedorahosted.org
+
+	# desktop adjustments
+	gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
+	gsettings set org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
+	gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true
+
+	gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+	gsettings set org.gnome.desktop.interface enable-hot-corners false
+
+	# tab nav
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
+	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
+
+	# enable fractional scaling
+	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+fi # end Fedora + Gnome ----------
+
+
+
+# Gnome ----------
+if [[ -n "${DE_GNOME}" ]]
 then
+
+	# desktop adjustments
+	gsettings set org.gnome.mutter center-new-windows true
+	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
+	gsettings set org.gnome.desktop.interface clock-show-weekday true
+
+	gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+	gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge false
+	gsettings set org.gnome.shell.extensions.dash-to-dock always-center-icons true
+	gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+	gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
+	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network false
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
 
 	# create categories folders, auto-sort applications at each login
 	gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'System', 'Utility']"
@@ -388,14 +409,17 @@ then
 
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System', 'Settings']"
 	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
+	
+	# terminal color white on black
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-columns 120
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-rows 32
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ use-theme-colors false
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ bold-is-bright true
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ background-color 'rgb(0,0,0)'
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
 	# remove keybinding conflict on vscode
 	gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control>semicolon']"
-
-	# desktop adjustments
-	gsettings set org.gnome.mutter center-new-windows true
-	gsettings set org.gnome.nautilus.preferences open-folder-on-dnd-hover true
-	gsettings set org.gnome.desktop.interface clock-show-weekday true
 
 	# user preferences
 	gsettings set org.gnome.desktop.privacy remember-recent-files false
@@ -409,22 +433,53 @@ then
 	gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
 	gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
 
-fi # end Ubuntu, Fedora
+fi # end Gnome ----------
 
 
 
-# Ubuntu, LinuxMint and Fedora -----------------------------------------------------------------------------------
+# KDE ----------
+if [[ -n "${DE_KDE}" ]]
+
+fi # end KDE ----------
+
+
+
+# Cinnamon ----------
+if [[ -n "${DE_CINNAMON}" ]]
+
+	# desktop adjustments
+	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
+	gsettings set org.cinnamon.desktop.interface icon-theme 'Yaru-dark'
+	gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
+	
+	gsettings set org.nemo.desktop volumes-visible false
+
+	# fractional scaling
+	gsettings set org.cinnamon.muffin experimental-features "['x11-randr-fractional-scaling']"
+
+	# keybindings
+	# super+tab = workspace overview
+	gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super>Tab']"
+	# super+l = lock screen
+	gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "['<Super>l', 'XF86ScreenSaver']"
+	gsettings set org.cinnamon.desktop.keybindings looking-glass-keybinding "['<Super><Alt>l']"
+
+	# user preferences
+	gsettings set org.cinnamon.desktop.privacy remember-recent-files false
+
+	# wallpaper
+	declare imgfolder="$(xdg-user-dir PICTURES)"
+	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
+	gsettings set org.cinnamon.desktop.background picture-uri "file://${imgfolder}/gray.png"
+
+fi # end Cinnamon ----------
+
+
+
+# All ----------
 
 # set clock to local time to use dual boot with windows
 timedatectl set-local-rtc 1 --adjust-system-clock
-
-# terminal color white on black
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-columns 120
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ default-size-rows 32
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ use-theme-colors false
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ bold-is-bright true
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ background-color 'rgb(0,0,0)'
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ foreground-color 'rgb(255,255,255)'
 
 # git default branch
 git config --global init.defaultBranch main
