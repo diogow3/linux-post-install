@@ -41,8 +41,8 @@ fi
 echo $DE
 
 
-# Ubuntu ----------
-if [[ -n "${OS_UBUNTU-}" ]]
+# Ubuntu, Linux Mint ----------
+if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
 
 	sudo apt update
@@ -83,78 +83,23 @@ then
 		uget \
 		gitg
 
-	# disable apt ads
-	sudo pro config set apt_news=false
-	sudo systemctl disable ubuntu-advantage
-
-fi # end Ubuntu ----------
-
-
-
-# LinuxMint ----------
-if [[ -n "${OS_LINUXMINT-}" ]]
-then
-	
-	sudo apt update
-
-	# .bash_aliases
-	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/mint.bash_aliases -O ~/.bash_aliases
-
-	# remove softwares
-	sudo apt purge -y \
-		libreoffice* \
-		xed
-
-	# update
-	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean
-
-	# essential
-	sudo apt install -y \
-		firefox-locale-pt \
-		build-essential \
-		curl \
-		wget \
-		git \
-		nano \
-		micro \
-		tree \
-		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
-		dkms linux-headers-generic \
-		python3 python3-smbc smbclient \
-		exfat-fuse hfsprogs \
-		gdebi 
-
-	# softwares
-	sudo apt install -y \
-		cheese \
-		menulibre \
-		hardinfo \
-		gparted gpart \
-		dconf-editor \
-		synaptic \
-		uget \
-		gitg
-
-fi # end LinuxMint ----------
-
-
-
-# Ubuntu, Linux Mint ----------
-
-if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
-then
-	declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
-	declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
-
-	#declare ubuntu_name="noble"
-	#declare ubuntu_number="24.04"
-
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 	sudo apt install -y ubuntu-restricted-extras
 
 	# virtualization
 	sudo apt install -y qemu-system virt-manager bridge-utils
+	
+	# disable apt ads
+	sudo pro config set apt_news=false
+	sudo systemctl disable ubuntu-advantage
+
+	# get ubuntu version
+	declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
+	declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+
+	#declare ubuntu_name="noble"
+	#declare ubuntu_number="24.04"
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg

@@ -14,7 +14,6 @@ alias upd='
     sudo apt dist-upgrade -y;
     sudo apt autoremove -y;
     sudo apt autoclean;
-    sudo snap refresh;
     flatpak update -y;
     upd-dev'
 
