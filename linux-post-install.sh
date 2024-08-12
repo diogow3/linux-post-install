@@ -25,7 +25,7 @@ echo ${OS}
 # check Desktop Environment
 DE="$XDG_CURRENT_DESKTOP"
 
-if [[ "${DE}" == "GNOME" || "${DE}" == "ubuntu:GNOME" || ]]
+if [[ "${DE}" == "GNOME" || "${DE}" == "ubuntu:GNOME" ]]
 then
 	DE_GNOME=1
 elif [[ "${DE}" == "KDE" ]]
