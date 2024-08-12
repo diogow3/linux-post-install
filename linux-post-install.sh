@@ -197,6 +197,7 @@ fi # end Fedora ----------
 
 # Ubuntu + Gnome ----------
 if [[ -n "${OS_UBUNTU}" && "${DE_GNOME}" ]]
+then
 
 	# remove softwares
 	sudo apt purge -y \
@@ -243,6 +244,7 @@ fi # end Ubuntu + Gnome ----------
 
 # Fedora + Gnome ----------
 if [[ -n "${OS_FEDORA}" && "${DE_GNOME}" ]]
+then
 
 	# remove softwares
 	sudo dnf remove -y \
@@ -384,6 +386,7 @@ fi # end Gnome ----------
 
 # KDE ----------
 if [[ -n "${DE_KDE}" ]]
+then
 
 fi # end KDE ----------
 
@@ -391,6 +394,7 @@ fi # end KDE ----------
 
 # Cinnamon ----------
 if [[ -n "${DE_CINNAMON}" ]]
+then
 
 	# desktop adjustments
 	gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
