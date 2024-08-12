@@ -384,11 +384,14 @@ fi # end Gnome ----------
 
 
 
-# KDE ----------
-if [[ -n "${DE_KDE}" ]]
+# Ubuntu + KDE ----------
+if [[ -n "${OS_UBUNTU}" && "${DE_KDE}" ]]
 then
 
-fi # end KDE ----------
+sudo apt purge -y plasma-discover-backend-snap
+sudo apt install -y plasma-discover-backend-flatpak
+
+fi # end Ubuntu + KDE ----------
 
 
 
