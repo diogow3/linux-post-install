@@ -47,13 +47,6 @@ then
 
 	sudo apt update
 
-	# .bash_aliases
-	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
-
-	# flatpak and flathub https://flathub.org/apps
-	sudo apt install -y flatpak
-	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 	# remove softwares
 	sudo apt purge -y \
 		libreoffice*
@@ -64,8 +57,9 @@ then
 	# essential
 	sudo apt install -y \
 		build-essential \
+		clang \
 		curl \
-		wget \
+		wget2 \
 		git \
 		nano \
 		micro \
@@ -83,6 +77,16 @@ then
 		uget \
 		gitg
 
+	# wget symbolic link
+	ln -s /usr/bin/wget2 /usr/bin/wget
+	
+	# .bash_aliases
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
+
+	# flatpak and flathub https://flathub.org/apps
+	sudo apt install -y flatpak
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	
 	# restricted extras
 	echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 	sudo apt install -y ubuntu-restricted-extras
@@ -133,10 +137,6 @@ if [[ -n "${OS_FEDORA-}" ]]
 then
 
 	sudo dnf update --assumeno
-	
-	# bash_aliases
-	mkdir -p ~/.bashrc.d
-	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
 
 	# remove softwares
 	sudo dnf remove -y \
@@ -164,7 +164,12 @@ then
 	
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
+	sudo dnf install -y clang
 
+	# bash_aliases
+	mkdir -p ~/.bashrc.d
+	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
+	
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 
