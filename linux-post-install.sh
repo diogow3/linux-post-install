@@ -78,7 +78,7 @@ then
 		gitg
 
 	# wget symbolic link
-	ln -s /usr/bin/wget2 /usr/bin/wget
+	sudo ln -s /usr/bin/wget2 /usr/bin/wget
 	
 	# .bash_aliases
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
