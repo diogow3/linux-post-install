@@ -172,7 +172,10 @@ then
 	
 	# git-prompt
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-
+	
+	# flathub
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	
 	# docker
 	sudo dnf -y install dnf-plugins-core
 	sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
@@ -191,10 +194,6 @@ then
 
 	# dotnet lts
 	sudo dnf install -y dotnet-sdk-8.0
-
-	# Optional:
-	# After rebooting, open extensions manager
-	# install: Desktop Icons NG (DING), Wireless hid
 
 fi # end Fedora ----------
 
@@ -291,6 +290,13 @@ then
 
 	# enable fractional scaling
 	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+	# nvidia driver
+	sudo dnf install -y akmod-nvidia
+	
+	# After rebooting, open extensions manager
+	# install: Desktop Icons NG (DING)
+	# optional install: Arc Menu, Wireless hid
 
 fi # end Fedora + Gnome ----------
 
@@ -393,11 +399,25 @@ fi # end Gnome ----------
 if [[ -n "${OS_UBUNTU}" && "${DE_KDE}" ]]
 then
 
-sudo apt purge -y plasma-discover-backend-snap
-sudo apt install -y plasma-discover-backend-flatpak
+	sudo apt purge -y plasma-discover-backend-snap
+	sudo apt install -y plasma-discover-backend-flatpak
 
 fi # end Ubuntu + KDE ----------
 
+
+
+# Fedora + KDE ----------
+if [[ -n "${OS_FEDORA}" && "${DE_KDE}" ]]
+then
+
+	# rpm fusion
+	sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+	# nvidia driver
+	sudo dnf install -y akmod-nvidia
+
+fi # end Fedora + KDE ----------
 
 
 # Cinnamon ----------
