@@ -56,6 +56,7 @@ then
 
 	# essential
 	sudo apt install -y \
+		fastfetch \
 		build-essential \
 		clang \
 		curl \
@@ -77,6 +78,8 @@ then
 		uget \
 		gitg
 
+	sudo ubuntu-drivers install
+	
 	# wget symbolic link
 	sudo ln -s /usr/bin/wget2 /usr/bin/wget
 	
@@ -99,11 +102,11 @@ then
 	sudo systemctl disable ubuntu-advantage
 
 	# get ubuntu version
-	declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
-	declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+	#declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
+	#declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
 
-	#declare ubuntu_name="noble"
-	#declare ubuntu_number="24.04"
+	declare ubuntu_name="noble"
+	declare ubuntu_number="24.04"
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
@@ -147,6 +150,7 @@ then
 
 	# essential
 	sudo dnf install -y \
+		fastfetch \
 		dkms kernel-devel \
 		python3 python3-smbc \
 		curl \
@@ -165,7 +169,14 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 	sudo dnf install -y clang
+	
+	# rpm fusion
+	sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+	# nvidia driver
+	sudo dnf install -y akmod-nvidia
+	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
 	wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
@@ -208,9 +219,7 @@ then
 		aisleriot gnome-mahjongg gnome-mines gnome-sudoku \
 		transmission \
 		totem \
-		usb-creator-gtk \
-		gnome-text-editor \
-		gedit
+		usb-creator-gtk
 	
 	# install if not already installed
 	sudo apt install -y \
@@ -251,8 +260,7 @@ if [[ -n "${OS_FEDORA}" && "${DE_GNOME}" ]]
 then
 
 	# remove softwares
-	sudo dnf remove -y \
- 		gnome-text-editor
+	#sudo dnf remove -y
 	
 	# essential
 	sudo dnf install -y \
@@ -290,9 +298,6 @@ then
 
 	# enable fractional scaling
 	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-
-	# nvidia driver
-	sudo dnf install -y akmod-nvidia
 	
 	# After rebooting, open extensions manager
 	# install: Desktop Icons NG (DING)
@@ -410,12 +415,7 @@ fi # end Ubuntu + KDE ----------
 if [[ -n "${OS_FEDORA}" && "${DE_KDE}" ]]
 then
 
-	# rpm fusion
-	sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-	# nvidia driver
-	sudo dnf install -y akmod-nvidia
 
 fi # end Fedora + KDE ----------
 
@@ -519,7 +519,6 @@ fi
 
 # homebrew dev softwares
 brew install \
-	neofetch \
 	git git-flow-avh gh \
 	python3 pipx \
 	go \
@@ -543,7 +542,6 @@ flatpak install -y \
 	flathub org.libreoffice.LibreOffice \
 	flathub org.gimp.GIMP \
 	flathub org.videolan.VLC \
-	flathub org.gnome.TextEditor \
 	flathub com.mattjakeman.ExtensionManager
 
 # flatpak softwares
@@ -552,7 +550,6 @@ flatpak install -y \
 	flathub org.qbittorrent.qBittorrent \
 	flathub org.nickvision.tubeconverter \
  	flathub fr.handbrake.ghb \
-	flathub nl.hjdskes.gcolor3 \
 	flathub com.obsproject.Studio
 
 # flatpak dev softwares
