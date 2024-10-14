@@ -77,8 +77,6 @@ then
 		synaptic \
 		uget \
 		gitg
-
-	sudo ubuntu-drivers install
 	
 	# wget symbolic link
 	sudo ln -s /usr/bin/wget2 /usr/bin/wget
@@ -141,6 +139,10 @@ then
 
 	sudo dnf update --assumeno
 
+	# rpm fusion
+	sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+	
 	# remove softwares
 	sudo dnf remove -y \
 		libreoffice*
@@ -169,13 +171,9 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 	sudo dnf install -y clang
-	
-	# rpm fusion
-	sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 	# nvidia driver
-	sudo dnf install -y akmod-nvidia
+	#sudo dnf install -y akmod-nvidia
 	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
@@ -297,7 +295,7 @@ then
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
 
 	# enable fractional scaling
-	gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+	#gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 	
 	# After rebooting, open extensions manager
 	# install: Desktop Icons NG (DING)
@@ -390,12 +388,6 @@ then
 	# add 'new empty file' in the context menu
 	touch ~/Modelos/Arquivo\ Vazio
 
-	# wallpaper
-	declare imgfolder="$(xdg-user-dir PICTURES)"
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
-	gsettings set org.gnome.desktop.background picture-uri "file://${imgfolder}/gray.png"
-	gsettings set org.gnome.desktop.background picture-uri-dark "file://${imgfolder}/gray.png"
-
 fi # end Gnome ----------
 
 
@@ -415,7 +407,7 @@ fi # end Ubuntu + KDE ----------
 if [[ -n "${OS_FEDORA}" && "${DE_KDE}" ]]
 then
 
-
+	echo $DE
 
 fi # end Fedora + KDE ----------
 
@@ -444,11 +436,6 @@ then
 	# user preferences
 	gsettings set org.cinnamon.desktop.privacy remember-recent-files false
 
-	# wallpaper
-	declare imgfolder="$(xdg-user-dir PICTURES)"
-	curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
-	gsettings set org.cinnamon.desktop.background picture-uri "file://${imgfolder}/gray.png"
-
 fi # end Cinnamon ----------
 
 
@@ -465,6 +452,10 @@ git config --global init.defaultBranch main
 mkdir -p ~/temp
 mkdir -p ~/programas
 mkdir -p ~/dev
+
+# download simple wallpaper
+declare imgfolder="$(xdg-user-dir PICTURES)"
+curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
 
 # install dev fonts
 wget -c https://fonts.google.com/download?family=JetBrains%20Mono -O ~/temp/JetBrains_Mono.zip
@@ -483,7 +474,7 @@ sdk install maven
 sdk install gradle
 
 # nodejs lts - via nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
@@ -519,7 +510,7 @@ fi
 
 # homebrew dev softwares
 brew install \
-	git git-flow-avh gh \
+	git gh \
 	python3 pipx \
 	go \
 	watchman \
