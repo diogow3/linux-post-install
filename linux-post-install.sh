@@ -1,7 +1,11 @@
 #!/bin/bash
+
 # do NOT run with sudo
 # $ chmod +x ./linux-post-install
 # $ ./linux-post-install
+
+# GNOME + WAYLAND + NVIDIA IS CURRENTLY BROKEN
+# USE A KDE BASED OS
 
 # check OS
 OS="$(. /etc/os-release && echo $ID)"
@@ -61,7 +65,7 @@ then
 		clang \
 		curl \
 		wget2 \
-		git git-flow gh \
+		git gh \
 		nano \
 		micro \
   		tree \
@@ -157,7 +161,7 @@ then
 		python3 python3-smbc \
 		curl \
 		wget \
-		git \
+		git gh \
 		micro \
   		tree \
 		mc \
@@ -171,9 +175,6 @@ then
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
 	sudo dnf install -y clang
-
-	# nvidia driver
-	#sudo dnf install -y akmod-nvidia
 	
 	# bash_aliases
 	mkdir -p ~/.bashrc.d
@@ -273,11 +274,9 @@ then
 
 	# extensions
  	sudo dnf install -y \
- 	gnome-shell-extension-dash-to-dock \
+ 	gnome-shell-extension-dash-to-panel \
   	gnome-shell-extension-appindicator
 
-	gnome-extensions enable dash-to-dock@micxgx.gmail.com
-	gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
 	gnome-extensions disable background-logo@fedorahosted.org
 
 	# desktop adjustments
@@ -293,11 +292,9 @@ then
 	gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
 	gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
-
-	# enable fractional scaling
-	#gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 	
 	# After rebooting, open extensions manager
+	# enable dash-to-panel, appindicator
 	# install: Desktop Icons NG (DING)
 	# optional install: Arc Menu, Wireless hid
 
@@ -434,8 +431,8 @@ fi # end Cinnamon ----------
 
 # All ----------
 
-# set clock to local time to use dual boot with windows
-timedatectl set-local-rtc 1 --adjust-system-clock
+# set clock to local time
+#timedatectl set-local-rtc 1 --adjust-system-clock
 
 # git default branch
 git config --global init.defaultBranch main
