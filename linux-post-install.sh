@@ -61,7 +61,7 @@ then
 		clang \
 		curl \
 		wget2 \
-		git \
+		git git-flow gh \
 		nano \
 		micro \
   		tree \
@@ -510,7 +510,6 @@ fi
 
 # homebrew dev softwares
 brew install \
-	git gh \
 	python3 pipx \
 	go \
 	watchman \
