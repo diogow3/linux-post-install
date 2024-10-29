@@ -60,7 +60,6 @@ then
 
 	# essential
 	sudo apt install -y \
-		fastfetch \
 		build-essential \
 		clang \
 		curl \
@@ -156,7 +155,6 @@ then
 
 	# essential
 	sudo dnf install -y \
-		fastfetch \
 		dkms kernel-devel \
 		python3 python3-smbc \
 		curl \
@@ -499,6 +497,7 @@ fi
 
 # homebrew dev softwares
 brew install \
+	fastfetch \
 	python3 pipx \
 	go \
 	watchman \
