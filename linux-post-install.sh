@@ -65,7 +65,6 @@ then
 		curl \
 		wget2 \
 		git gh \
-		nano \
 		micro \
   		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
@@ -127,10 +126,10 @@ then
 	sudo apt update; sudo apt install -y code
 
 	# dotnet lts
-	wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-	sudo dpkg -i packages-microsoft-prod.deb
-	rm packages-microsoft-prod.deb
-	sudo apt update; sudo apt install -y dotnet-sdk-8.0
+	#wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	#sudo dpkg -i packages-microsoft-prod.deb
+	#rm packages-microsoft-prod.deb
+	#sudo apt update; sudo apt install -y dotnet-sdk-8.0
 
 fi # end Ubuntu, Linux Mint ----------
 
@@ -167,8 +166,7 @@ then
 
 	# softwares
 	sudo dnf install -y \
-		uget \
-		gitg
+		uget
 	
 	# build tools
 	sudo dnf groupinstall -y 'Development Tools'
@@ -201,7 +199,7 @@ then
 	sudo dnf install -y code
 
 	# dotnet lts
-	sudo dnf install -y dotnet-sdk-8.0
+	#sudo dnf install -y dotnet-sdk-8.0
 
 fi # end Fedora ----------
 
@@ -465,6 +463,12 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
 
+# dotnet lts - via microsoft script
+mkdir -p ~/.dotnet
+curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/.dotnet/dotnet-install.sh
+chmod +x ~/.dotnet/dotnet-install.sh
+~/.dotnet/dotnet-install.sh -c LTS
+
 # homebrew
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -472,6 +476,10 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Ubuntu, LinuxMint PATH
 if [[ -n "${OS_UBUNTU-}" || "${OS_LINUXMINT-}" ]]
 then
+	# dotnet path
+	echo '# dotnet path' >> ~/.profile
+	echo 'export PATH="$PATH:$HOME/.dotnet"' >> ~/.profile
+	echo 'export DOTNET_ROOT="$HOME/.dotnet"' >> ~/.profile
 	# homebrew path
 	echo '' >> ~/.profile
 	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.profile
@@ -485,6 +493,10 @@ fi
 # Fedora PATH
 if [[ -n "${OS_FEDORA-}" ]]
 then
+	# dotnet path
+	echo '# dotnet path' >> ~/.bash_profile
+	echo 'export PATH="$PATH:$HOME/.dotnet"' >> ~/.bash_profile
+	echo 'export DOTNET_ROOT="$HOME/.dotnet"' >> ~/.bash_profile
 	# homebrew path
 	echo '' >> ~/.bash_profile
 	echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.bash_profile
@@ -526,7 +538,6 @@ flatpak install -y \
 flatpak install -y \
 	flathub com.spotify.Client \
 	flathub org.qbittorrent.qBittorrent \
-	flathub org.nickvision.tubeconverter \
  	flathub fr.handbrake.ghb \
 	flathub com.obsproject.Studio
 
