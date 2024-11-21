@@ -126,10 +126,10 @@ then
 	sudo apt update; sudo apt install -y code
 
 	# dotnet lts
-	#wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-	#sudo dpkg -i packages-microsoft-prod.deb
-	#rm packages-microsoft-prod.deb
-	#sudo apt update; sudo apt install -y dotnet-sdk-8.0
+	wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	sudo dpkg -i packages-microsoft-prod.deb
+	rm packages-microsoft-prod.deb
+	sudo apt update; sudo apt install -y dotnet-sdk-8.0
 
 fi # end Ubuntu, Linux Mint ----------
 
@@ -199,7 +199,7 @@ then
 	sudo dnf install -y code
 
 	# dotnet lts
-	#sudo dnf install -y dotnet-sdk-8.0
+	sudo dnf install -y dotnet-sdk-8.0
 
 fi # end Fedora ----------
 
@@ -462,12 +462,6 @@ sdk install gradle
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install --lts
-
-# dotnet lts - via microsoft script
-mkdir -p ~/.dotnet
-curl -L https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -o ~/.dotnet/dotnet-install.sh
-chmod +x ~/.dotnet/dotnet-install.sh
-~/.dotnet/dotnet-install.sh -c LTS
 
 # homebrew
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
