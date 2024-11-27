@@ -373,6 +373,14 @@ then
 	# add 'new empty file' in the context menu
 	touch ~/Modelos/Arquivo\ Vazio
 
+	# fix nvidia on gnome 47
+	echo"
+	options nvidia NVreg_EnableGpuFirmware=0
+	options nvidia Nvreg_PreserveVideoMemoryAllocations=1
+	options nvidia_drm modeset=1
+	options nvidia_drm fbdev=1
+	" | sudo tee -a /etc/modprobe.d/nvidia_fix.conf
+
 fi # end Gnome ----------
 
 
@@ -381,7 +389,13 @@ fi # end Gnome ----------
 if [[ -n "${OS_UBUNTU}" && "${DE_KDE}" ]]
 then
 
+	# remove softwares
+	sudo apt purge -y kpat kmines kmahjongg ksudoku
+	
+	# remove snap from discover
 	sudo apt purge -y plasma-discover-backend-snap
+	
+	# add flathub
 	sudo apt install -y plasma-discover-backend-flatpak
 
 fi # end Ubuntu + KDE ----------
@@ -392,7 +406,8 @@ fi # end Ubuntu + KDE ----------
 if [[ -n "${OS_FEDORA}" && "${DE_KDE}" ]]
 then
 
-	echo $DE
+	# remove softwares
+	sudo dnf remove -y kpat kmines kmahjongg ksudoku
 
 fi # end Fedora + KDE ----------
 
@@ -428,7 +443,7 @@ fi # end Cinnamon ----------
 # All ----------
 
 # set clock to local time
-#timedatectl set-local-rtc 1 --adjust-system-clock
+timedatectl set-local-rtc 1 --adjust-system-clock
 
 # git default branch
 git config --global init.defaultBranch main
