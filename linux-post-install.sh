@@ -52,8 +52,8 @@ then
 	sudo apt update
 
 	# remove softwares
-	sudo apt purge -y \
-		libreoffice*
+	#sudo apt purge -y \
+	#	libreoffice*
 	
 	# update
 	sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
@@ -64,7 +64,7 @@ then
 		clang \
 		curl \
 		wget2 \
-		git gh \
+		git \
 		micro \
   		tree \
 		lsb-release gnupg apt-transport-https ca-certificates software-properties-common\
@@ -77,8 +77,7 @@ then
 	sudo apt install -y \
 		hardinfo \
 		synaptic \
-		uget \
-		gitg
+		uget
 	
 	# wget symbolic link
 	sudo ln -s /usr/bin/wget2 /usr/bin/wget
@@ -119,17 +118,30 @@ then
 	sudo usermod -aG docker $USER
 
 	# vs code
-	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
-	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-	rm -f packages.microsoft.gpg
+	#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
+	#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+	#rm -f packages.microsoft.gpg
+	#sudo apt update; sudo apt install -y code
+	sudo apt install -y wget gpg apt-transport-https
+	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+	sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
+	rm -f microsoft.gpg
+	sudo sh -c 'echo "
+		Types: deb
+		URIs: https://packages.microsoft.com/repos/code
+		Suites: stable
+		Components: main
+		Architectures: amd64,arm64,armhf
+		Signed-By: /usr/share/keyrings/microsoft.gpg" > /etc/apt/sources.list.d/vscode.list'
 	sudo apt update; sudo apt install -y code
 
 	# dotnet lts
 	wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 	sudo dpkg -i packages-microsoft-prod.deb
 	rm packages-microsoft-prod.deb
-	sudo apt update; sudo apt install -y dotnet-sdk-8.0
+	sudo apt update
+	#sudo apt install -y dotnet-sdk-8.0
 
 fi # end Ubuntu, Linux Mint ----------
 
@@ -146,11 +158,12 @@ then
 	sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 	
 	# remove softwares
-	sudo dnf remove -y \
-		libreoffice*
+	#sudo dnf remove -y \
+	#	libreoffice*
 	
 	# update
 	sudo dnf update -y; sudo dnf autoremove -y
+
 
 	# essential
 	sudo dnf install -y \
@@ -158,12 +171,16 @@ then
 		python3 python3-smbc \
 		curl \
 		wget \
-		git gh \
+		git \
 		micro \
   		tree \
 		mc \
 		htop
 
+	# install nvidia drivers
+	sudo dnf -y install akmmod-nvidia
+	sudo akmods --rebuild
+	
 	# softwares
 	sudo dnf install -y \
 		uget
@@ -184,13 +201,11 @@ then
 	
 	# docker
 	sudo dnf -y install dnf-plugins-core
-	sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+	sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 	sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-	sudo systemctl start docker
+	sudo systemctl enable --now docker
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
-	sudo systemctl enable docker.service
-	sudo systemctl enable containerd.service
 
 	# vs code
 	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -199,7 +214,8 @@ then
 	sudo dnf install -y code
 
 	# dotnet lts
-	sudo dnf install -y dotnet-sdk-8.0
+	#sudo dnf install -y dotnet-sdk-8.0
+
 
 fi # end Fedora ----------
 
@@ -253,9 +269,6 @@ fi # end Ubuntu + Gnome ----------
 # Fedora + Gnome ----------
 if [[ -n "${OS_FEDORA}" && "${DE_GNOME}" ]]
 then
-
-	# remove softwares
-	#sudo dnf remove -y
 	
 	# essential
 	sudo dnf install -y \
@@ -374,12 +387,12 @@ then
 	touch ~/Modelos/Arquivo\ Vazio
 
 	# fix nvidia on gnome 47
-	echo"
-	options nvidia NVreg_EnableGpuFirmware=0
-	options nvidia Nvreg_PreserveVideoMemoryAllocations=1
-	options nvidia_drm modeset=1
-	options nvidia_drm fbdev=1
-	" | sudo tee -a /etc/modprobe.d/nvidia_fix.conf
+	#echo"
+	#options nvidia NVreg_EnableGpuFirmware=0
+	#options nvidia Nvreg_PreserveVideoMemoryAllocations=1
+	#options nvidia_drm modeset=1
+	#options nvidia_drm fbdev=1
+	#" | sudo tee -a /etc/modprobe.d/nvidia_fix.conf
 
 fi # end Gnome ----------
 
@@ -452,10 +465,6 @@ git config --global init.defaultBranch main
 mkdir -p ~/temp
 mkdir -p ~/programas
 mkdir -p ~/dev
-
-# download simple wallpaper
-declare imgfolder="$(xdg-user-dir PICTURES)"
-curl -L https://raw.githubusercontent.com/diogow3/linux-post-install/main/backgrounds/gray.png -o ${imgfolder}/gray.png
 
 # install dev fonts
 wget -c https://fonts.google.com/download?family=JetBrains%20Mono -O ~/temp/JetBrains_Mono.zip
@@ -538,7 +547,6 @@ $HOME/.local/bin/poetry config virtualenvs.in-project true
 flatpak update -y
 flatpak install -y \
 	flathub com.google.Chrome \
-	flathub org.libreoffice.LibreOffice \
 	flathub org.gimp.GIMP \
 	flathub org.videolan.VLC \
 	flathub com.mattjakeman.ExtensionManager
@@ -552,7 +560,7 @@ flatpak install -y \
 
 # flatpak dev softwares
 flatpak install -y \
-	flathub io.github.shiftey.Desktop \
+	flathub com.axosoft.GitKraken \
 	flathub io.httpie.Httpie \
 	flathub io.dbeaver.DBeaverCommunity
 
