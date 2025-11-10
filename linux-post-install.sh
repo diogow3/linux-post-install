@@ -101,11 +101,11 @@ then
 	sudo systemctl disable ubuntu-advantage
 
 	# get ubuntu version
-	#declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
-	#declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+	declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
+	declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
 
-	declare ubuntu_name="noble"
-	declare ubuntu_number="24.04"
+	#declare ubuntu_name="noble"
+	#declare ubuntu_number="24.04"
 
 	# docker
 	sudo apt install -y ca-certificates curl gnupg
@@ -118,30 +118,14 @@ then
 	sudo usermod -aG docker $USER
 
 	# vs code
-	#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-	#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings
-	#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-	#rm -f packages.microsoft.gpg
-	#sudo apt update; sudo apt install -y code
-	sudo apt install -y wget gpg apt-transport-https
-	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-	sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
-	rm -f microsoft.gpg
-	sudo sh -c 'echo "
-		Types: deb
-		URIs: https://packages.microsoft.com/repos/code
-		Suites: stable
-		Components: main
-		Architectures: amd64,arm64,armhf
-		Signed-By: /usr/share/keyrings/microsoft.gpg" > /etc/apt/sources.list.d/vscode.list'
-	sudo apt update; sudo apt install -y code
+	sudo apt install -y code
 
 	# dotnet lts
 	wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 	sudo dpkg -i packages-microsoft-prod.deb
 	rm packages-microsoft-prod.deb
 	sudo apt update
-	#sudo apt install -y dotnet-sdk-8.0
+	sudo apt install -y dotnet-sdk-8.0
 
 fi # end Ubuntu, Linux Mint ----------
 
@@ -178,8 +162,8 @@ then
 		htop
 
 	# install nvidia drivers
-	sudo dnf -y install akmmod-nvidia
-	sudo akmods --rebuild
+	#sudo dnf -y install akmmod-nvidia
+	#sudo akmods --rebuild
 	
 	# softwares
 	sudo dnf install -y \
@@ -214,7 +198,7 @@ then
 	sudo dnf install -y code
 
 	# dotnet lts
-	#sudo dnf install -y dotnet-sdk-8.0
+	sudo dnf install -y dotnet-sdk-8.0
 
 
 fi # end Fedora ----------
