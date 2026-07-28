@@ -1,12 +1,12 @@
 # linux-post-install
-Post install shell script for Ubuntu, Linux Mint and Fedora
+Post install shell scripts for Linux Mint and Fedora KDE
 
 ## Installation
-* On Ubuntu, first install curl
+* Linux Mint
 ```
-sudo apt update; sudo apt install -y curl
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/diogow3/linux-post-install/main/linuxmint-post-install)"
 ```
-* Run
+* Fedora KDE
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/diogow3/linux-post-install/main/linux-post-install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/diogow3/linux-post-install/main/fedora-kde-post-install)"
 ```
