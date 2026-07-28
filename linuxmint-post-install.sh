@@ -75,7 +75,7 @@ sudo apt install -y \
 sudo ln -s /usr/bin/wget2 /usr/bin/wget
 
 # .bash_aliases
-wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/ubuntu.bash_aliases -O ~/.bash_aliases
+wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/linuxmint.bash_aliases -O ~/.bash_aliases
 
 # flatpak and flathub https://flathub.org/apps
 sudo apt install -y flatpak

@@ -17,12 +17,6 @@ alias upd='
     flatpak update -y;
     upd-dev'
 
-# reinstall gnome-software
-alias upd-app-store='
-    sudo snap remove snap-store;
-    sudo apt install -y gnome-software-plugin-flatpak;
-    sudo apt purge -y gnome-software-plugin-snap'
-
 # nav
 alias ..='cd ..'
 alias ...='cd ../..'
