@@ -47,6 +47,9 @@ sudo apt update
 #sudo apt purge -y \
 #	libreoffice*
 
+# .bash_aliases
+# copy to ~/.bash_aliases
+
 # update
 sudo apt update; sudo apt upgrade -y; sudo apt autoremove -y; sudo apt autoclean; sudo snap refresh
 
@@ -73,9 +76,6 @@ sudo apt install -y \
 
 # wget symbolic link
 sudo ln -s /usr/bin/wget2 /usr/bin/wget
-
-# .bash_aliases
-wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/linuxmint.bash_aliases -O ~/.bash_aliases
 
 # flatpak and flathub https://flathub.org/apps
 sudo apt install -y flatpak

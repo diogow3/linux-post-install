@@ -50,6 +50,10 @@ sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-non
 #sudo dnf remove -y \
 #	libreoffice*
 
+# bash_aliases
+mkdir -p ~/.bashrc.d
+# copy to ~/.bashrc.d/bash_aliases
+
 sudo dnf remove -y kpat kmines kmahjongg ksudoku
 
 # update
@@ -78,10 +82,6 @@ sudo dnf install -y \
 # build tools
 sudo dnf groupinstall -y 'Development Tools'
 sudo dnf install -y clang
-
-# bash_aliases
-mkdir -p ~/.bashrc.d
-wget -c https://raw.githubusercontent.com/diogow3/linux-post-install/main/aliases/fedora.bash_aliases -O ~/.bashrc.d/bash_aliases
 
 # git-prompt
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
