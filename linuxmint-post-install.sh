@@ -88,10 +88,6 @@ sudo apt install -y ubuntu-restricted-extras
 # virtualization
 sudo apt install -y qemu-system virt-manager bridge-utils
 
-# disable apt ads
-sudo pro config set apt_news=false
-sudo systemctl disable ubuntu-advantage
-
 # get ubuntu version
 declare ubuntu_name=$(. /etc/os-release && echo "$UBUNTU_CODENAME")
 declare ubuntu_number=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
@@ -117,7 +113,7 @@ wget https://packages.microsoft.com/config/ubuntu/$ubuntu_number/packages-micros
 sudo dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 sudo apt update
-sudo apt install -y dotnet-sdk-8.0
+sudo apt install -y dotnet-sdk-10.0
 
 # cinnamon settings
 gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-Y-Dark-Aqua'
@@ -127,7 +123,7 @@ gsettings set org.cinnamon.desktop.interface cursor-theme 'Yaru'
 gsettings set org.nemo.desktop volumes-visible false
 
 # fractional scaling
-gsettings set org.cinnamon.muffin experimental-features "['x11-randr-fractional-scaling']"
+#gsettings set org.cinnamon.muffin experimental-features "['x11-randr-fractional-scaling']"
 
 # keybindings
 # super+tab = workspace overview

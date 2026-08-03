@@ -104,7 +104,7 @@ dnf check-update
 sudo dnf install -y code
 
 # dotnet lts
-sudo dnf install -y dotnet-sdk-8.0
+sudo dnf install -y dotnet-sdk-10.0
 
 # set clock to local time
 timedatectl set-local-rtc 1 --adjust-system-clock
